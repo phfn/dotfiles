@@ -14,3 +14,4 @@ set nu
 set relativenumber
 set nowrap
 set incsearch
+set noswapfile
