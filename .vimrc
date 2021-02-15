@@ -15,3 +15,5 @@ set relativenumber
 set nowrap
 set incsearch
 set noswapfile
+autocmd TextChanged,TextChangedI <buffer> silent write
+set ls=2
