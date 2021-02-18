@@ -11,18 +11,27 @@ call plug#begin()
 Plug 'doums/darcula'
 "better filetree
 Plug 'preservim/nerdtree'
+"git in filetree
+Plug 'Xuyuanp/nerdtree-git-plugin' 
+"icons in filetree
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'ryanoasis/vim-devicons'
 "linter
 Plug 'vim-syntastic/syntastic'
 " better search 
 Plug 'ctrlpvim/ctrlp.vim'
 "autoclose ()[]{}
 Plug 'jiangmiao/auto-pairs'
-"comment things with ctrl+/
+"comment things with space+c+space
 Plug 'preservim/nerdcommenter'
 "autpcomletion in python
 Plug 'davidhalter/jedi-vim'
 "use s to surround
 Plug 'tpope/vim-surround'
+"intention with i eg dai deletes a funktion in python
+Plug 'michaeljsmith/vim-indent-object'
+"venv shit | use :VirtualEnvActivate venv
+Plug 'jmcantrell/vim-virtualenv'
 call plug#end()
 
 "colour
