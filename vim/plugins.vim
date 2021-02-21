@@ -30,6 +30,8 @@ Plug 'tpope/vim-surround'
 Plug 'michaeljsmith/vim-indent-object'
 "venv shit | use :VirtualEnvActivate venv
 Plug 'jmcantrell/vim-virtualenv'
+"autosafe with :AutoSaveToggle
+Plug '907th/vim-auto-save'
 call plug#end()
 
 "let it be beautifull
@@ -44,3 +46,7 @@ let g:NERDSpaceDelims = 1
 
 " NERDTree
 map <leader>t :NERDTreeToggle<CR>
+
+"disabel syntastic check on autosave
+let g:auto_save_postsave_hook = 'SyntasticToggleMode'
+let g:auto_save_presave_hook = 'SyntasticToggleMode'
