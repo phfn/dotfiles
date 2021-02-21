@@ -32,6 +32,8 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'jmcantrell/vim-virtualenv'
 "autosafe with :AutoSaveToggle
 Plug '907th/vim-auto-save'
+" better markings| mark with m[key] jump with '[key]
+Plug 'kshenoy/vim-signature'
 call plug#end()
 
 "let it be beautifull
