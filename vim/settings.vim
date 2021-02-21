@@ -1,9 +1,6 @@
 syntax on
 let mapleader = " "
 
-"let it be beautifull
-colorscheme darcula
-set termguicolors
 
 set encoding=utf-8
 

@@ -32,6 +32,10 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'jmcantrell/vim-virtualenv'
 call plug#end()
 
+"let it be beautifull
+colorscheme darcula
+set termguicolors
+
 "NERDCommender
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
