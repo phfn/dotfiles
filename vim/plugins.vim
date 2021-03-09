@@ -34,6 +34,8 @@ Plug 'jmcantrell/vim-virtualenv'
 Plug '907th/vim-auto-save'
 " better markings| mark with m[key] jump with '[key]
 Plug 'kshenoy/vim-signature'
+" better syntax highlighting for python
+Plug 'vim-python/python-syntax'
 call plug#end()
 
 "let it be beautifull

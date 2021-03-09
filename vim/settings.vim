@@ -26,3 +26,5 @@ set ls=2
 "better tabs for python
 set tabstop=4
 set softtabstop=4
+
+let g:python_highlight_all = 1
