@@ -47,6 +47,7 @@ set termguicolors
 let g:NERDCreateDefaultMappings = 1
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
+let g:NERDTreeQuitOnOpen = 1
 
 " NERDTree
 map <leader>t :NERDTreeToggle<CR>
