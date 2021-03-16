@@ -16,6 +16,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'ryanoasis/vim-devicons'
 "linter
 " Plug 'vim-syntastic/syntastic'
+" better than syntastics?
+Plug 'dense-analysis/ale'
 " better search 
 Plug 'ctrlpvim/ctrlp.vim'
 "autoclose ()[]{}
@@ -38,8 +40,6 @@ Plug 'kshenoy/vim-signature'
 Plug 'vim-python/python-syntax'
 " git support
 Plug 'tpope/vim-fugitive'
-" better than syntastics?
-Plug 'dense-analysis/ale'
 call plug#end()
 
 "let it be beautifull
@@ -62,7 +62,5 @@ map <leader>gc :Git commit<CR>
 map <leader>gs :Git status<CR> 
 map <leader>gp :Git push<CR> 
 
-
-"disabel syntastic check on autosave
-let g:auto_save_postsave_hook = 'SyntasticToggleMode'
-let g:auto_save_presave_hook = 'SyntasticToggleMode'
+" add some ale fixers for python
+let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements','autoimport', 'remove_trailing_lines', 'trim_whitespace']}
