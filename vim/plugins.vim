@@ -15,7 +15,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Plug 'ryanoasis/vim-devicons'
 "linter
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 " better search 
 Plug 'ctrlpvim/ctrlp.vim'
 "autoclose ()[]{}
@@ -38,6 +38,8 @@ Plug 'kshenoy/vim-signature'
 Plug 'vim-python/python-syntax'
 " git support
 Plug 'tpope/vim-fugitive'
+" better than syntastics?
+Plug 'dense-analysis/ale'
 call plug#end()
 
 "let it be beautifull
