@@ -36,6 +36,8 @@ Plug '907th/vim-auto-save'
 Plug 'kshenoy/vim-signature'
 " better syntax highlighting for python
 Plug 'vim-python/python-syntax'
+" git support
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 "let it be beautifull
@@ -51,6 +53,13 @@ let g:NERDTreeQuitOnOpen = 1
 
 " NERDTree
 map <leader>t :NERDTreeToggle<CR>
+
+" git
+map <leader>ga :Git add %<CR> 
+map <leader>gc :Git commit<CR> 
+map <leader>gs :Git status<CR> 
+map <leader>gp :Git push<CR> 
+
 
 "disabel syntastic check on autosave
 let g:auto_save_postsave_hook = 'SyntasticToggleMode'
