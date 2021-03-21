@@ -40,6 +40,8 @@ Plug 'kshenoy/vim-signature'
 Plug 'vim-python/python-syntax'
 " git support
 Plug 'tpope/vim-fugitive'
+" airline
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
 "let it be beautifull
