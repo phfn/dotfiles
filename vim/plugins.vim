@@ -17,7 +17,9 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "linter
 " Plug 'vim-syntastic/syntastic'
 " better than syntastics?
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
+" let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements','autoimport', 'remove_trailing_lines', 'trim_whitespace']}
+"
 " better search 
 Plug 'ctrlpvim/ctrlp.vim'
 "autoclose ()[]{}
@@ -25,8 +27,10 @@ Plug 'jiangmiao/auto-pairs'
 "comment things with space+c+space
 Plug 'preservim/nerdcommenter'
 "autpcomletion in python
-Plug 'davidhalter/jedi-vim'
-"use s to surround
+" Plug 'davidhalter/jedi-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+source ~/dotfiles/vim/coc.vim
+" use s to surround
 Plug 'tpope/vim-surround'
 "intention with i eg dai deletes a funktion in python
 Plug 'michaeljsmith/vim-indent-object'
@@ -63,4 +67,3 @@ map <leader>gs :Git status<CR>
 map <leader>gp :Git push<CR> 
 
 " add some ale fixers for python
-let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements','autoimport', 'remove_trailing_lines', 'trim_whitespace']}
