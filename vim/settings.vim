@@ -28,3 +28,7 @@ set tabstop=4
 set softtabstop=4
 
 let g:python_highlight_all = 1
+" enable cool coulours
+set termguicolors
+
+map <leader>so :source $MYVIMRC
