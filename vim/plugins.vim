@@ -28,7 +28,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
 Plug 'junegunn/fzf.vim'
-map <leader>gf :GFiles<CR>
 
 " autoclose ()[]{}
 Plug 'jiangmiao/auto-pairs'
@@ -71,7 +70,10 @@ map <leader>gc :Git commit<CR>
 map <leader>gs :Git status<CR> 
 map <leader>gp :Git push<CR> 
 map <leader>gd :vert Gdiffsplit<CR>
+map <leader>>> :diffget //2<CR>
+map <leader><< :diffget //3<CR>
 
 call plug#end()
 
 colorscheme darcula
+map <leader>f :GFiles<CR>
