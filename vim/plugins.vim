@@ -19,8 +19,12 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements','autoimport', 'remove_trailing_lines', 'trim_whitespace']}
 "
 " better search 
-Plug 'ctrlpvim/ctrlp.vim'
-"autoclose ()[]{}
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf.vim'
+nmap <leader>f :GFiles <CR>
+
+" autoclose ()[]{}
 Plug 'jiangmiao/auto-pairs'
 "comment things with space+c+space
 Plug 'preservim/nerdcommenter'
@@ -67,3 +71,4 @@ map <leader>gs :Git status<CR>
 map <leader>gp :Git push<CR> 
 
 " add some ale fixers for python
+"
