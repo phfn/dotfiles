@@ -42,3 +42,5 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+map <F9> :w <bar> !python %<CR>
+map <F19> :w <bar> !python %<Up><CR>
