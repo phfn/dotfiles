@@ -55,6 +55,9 @@ Plug 'jmcantrell/vim-virtualenv'
 "autosafe with :AutoSaveToggle
 Plug '907th/vim-auto-save'
 
+" Nice airline
+Plug 'vim-airline/vim-airline'
+
 " better markings| mark with m[key] jump with '[key]
 Plug 'kshenoy/vim-signature'
 
