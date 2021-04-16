@@ -58,6 +58,9 @@ Plug '907th/vim-auto-save'
 let g:auto_save = 0
 au FileType python let b:auto_save = 1
 
+" Nice airline
+Plug 'vim-airline/vim-airline'
+
 " better markings| mark with m[key] jump with '[key]
 Plug 'kshenoy/vim-signature'
 
