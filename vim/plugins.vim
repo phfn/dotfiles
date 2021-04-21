@@ -78,6 +78,9 @@ map <leader>get :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>
 
+" vim in firefox
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+source ~/dotfiles/vim/firenvim_settings.vim
 call plug#end()
 
 colorscheme darcula
