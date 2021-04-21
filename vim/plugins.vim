@@ -55,6 +55,8 @@ Plug 'jmcantrell/vim-virtualenv'
 
 "autosafe with :AutoSaveToggle
 Plug '907th/vim-auto-save'
+let g:auto_save = 0
+au FileType python let b:auto_save = 1
 
 " Nice airline
 Plug 'vim-airline/vim-airline'
@@ -73,7 +75,7 @@ map <leader>gs :Gstatus<CR>
 map <leader>gS :Git status<CR> 
 map <leader>gp :Git push<CR> 
 map <leader>gd :vert Gdiffsplit<CR>
-map <leader>gD :!Gvdiffsplit<CR>
+map <leader>gD :Gvdiffsplit!<CR>
 map <leader>get :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>

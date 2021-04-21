@@ -63,3 +63,6 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
+
+map <F9> :w <CR> :!python %<CR>
+map <F19> :w <CR> :!python %<Up><CR>
