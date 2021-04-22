@@ -20,4 +20,5 @@ if exists('g:started_by_firenvim')
   map <Esc> :q<CR>
   au BufEnter * CocDisable
   au BufEnter colab.research.google.com_*.txt set filetype=python
+  au BufEnter localhost_notebooks-*.txt set filetype=python
 endif
