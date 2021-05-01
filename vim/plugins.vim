@@ -33,11 +33,12 @@ Plug 'junegunn/fzf.vim'
 " autoclose ()[]{}
 Plug 'jiangmiao/auto-pairs'
 
-" eace comments things
-Plug 'preservim/nerdcommenter'
-map <leader>c<leader>   <Plug>NERDCommenterToggle
+" comments things
+Plug 'tpope/vim-commentary'
+map <leader>c<leader> <Plug>CommentaryLine
+" Plug 'preservim/nerdcommenter'
 " Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
+" let g:NERDSpaceDelims = 1
 
 "autpcomletion in python
 " Plug 'davidhalter/jedi-vim'
