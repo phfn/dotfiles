@@ -42,8 +42,8 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-map <F9> :w <bar> !python %<CR>
-map <F19> :w <bar> !python %<Up><CR>
+" press <F9> to run a file
+source ~/dotfiles/vim/run.vim
 
 " unendless undo
 " guard for distributions lacking the persistent_undo feature.
@@ -63,6 +63,3 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
-
-map <F9> :w <CR> :!python %<CR>
-map <F19> :w <CR> :!python %<Up><CR>
