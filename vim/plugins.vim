@@ -83,6 +83,12 @@ map <leader>gj :diffget //3<CR>
 " vim in firefox
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 source ~/dotfiles/vim/firenvim_settings.vim
+
+" better js syntac highlighting
+Plug 'yuezk/vim-js'
+
+" react highlighting
+Plug 'MaxMEllon/vim-jsx-pretty'
 call plug#end()
 
 colorscheme darcula
