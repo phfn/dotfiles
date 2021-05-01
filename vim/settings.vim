@@ -1,6 +1,8 @@
 syntax on
 let mapleader = " "
 
+" always show signcolumns
+set signcolumn=yes
 
 set encoding=utf-8
 
