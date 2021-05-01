@@ -7,15 +7,20 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>K :call <SID>show_help()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
-	execute 'h '.expand('<cword>')
+	call CocActionAsync('doHover')
   elseif (coc#rpc#ready())
 	call CocActionAsync('doHover')
   else
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
+endfunction
+
+function! s:show_help()
+	execute 'h '.expand('<cword>')
 endfunction
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
