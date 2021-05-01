@@ -35,7 +35,7 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-pyright', 'coc-marketplace', 'coc-tsserver', 'coc-vimlsp', 'coc-eslint']
 " autocmd 
 
 " let g:AutoPairsFlyMode = 1
