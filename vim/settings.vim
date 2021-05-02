@@ -26,8 +26,11 @@ set noswapfile
 set ls=2
 
 "better tabs for python
+au BufEnter *.py set expandtab
 set tabstop=4
 set softtabstop=4
+set shiftwidth=4
+set smartindent
 
 let g:python_highlight_all = 1
 " enable cool coulours
@@ -65,4 +68,3 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
-tnoremap <leader><ESC> <C-\><C-n>
