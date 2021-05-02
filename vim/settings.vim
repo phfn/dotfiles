@@ -65,3 +65,4 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
+tnoremap <leader><ESC> <C-\><C-n>
