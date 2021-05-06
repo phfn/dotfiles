@@ -71,3 +71,14 @@ endif
 
 " Close Terminal
 tnoremap <leader><ESC> <C-\><C-n>
+
+" make current buffer terminal
+if has("win32")
+	" user powershell insted of cmd
+	nnoremap <leader>s :e term://powershell<CR>
+	nnoremap <leader>S :vs term://powershell<CR>
+endif
+if has("unix")
+	nnoremap <leader>s :term://bash<CR>
+	nnoremap <leader>S :vs term://bash<CR>
+endif
