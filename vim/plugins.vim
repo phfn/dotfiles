@@ -58,6 +58,7 @@ Plug 'jmcantrell/vim-virtualenv'
 Plug '907th/vim-auto-save'
 let g:auto_save = 0
 au FileType python let b:auto_save = 1
+au FileType javascript let b:auto_save = 1
 
 " Nice airline
 Plug 'vim-airline/vim-airline'
