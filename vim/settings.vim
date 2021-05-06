@@ -16,6 +16,9 @@ set number relativenumber
 " seaching should stop at the end of the file
 set nowrap
 
+" open splits more naturally
+set splitright
+
 " sea search results while typing
 set incsearch
 
