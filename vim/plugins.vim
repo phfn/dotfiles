@@ -7,6 +7,9 @@ call plug#begin()
 " let it look like intellij
 Plug 'doums/darcula'
 
+" Another colorscheme
+Plug 'morhetz/gruvbox'
+
 "better filetree
 Plug 'preservim/nerdtree'
 map <leader>t :NERDTreeToggle<CR>
