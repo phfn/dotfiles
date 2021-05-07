@@ -2,11 +2,17 @@ cd %:h
 " Enable Mouse
 set mouse=a
 
-" Set Editor Font
-if exists(':GuiFont')
-    " Use GuiFont! to ignore font errors
-    GuiFont {font_name}:h{size}
-endif
+let s:fontsize = 16
+let s:fontname = "JetBrains Mono"
+function! AdjustFontSize(amount)
+  let s:fontsize = s:fontsize+a:amount
+  :execute "GuiFont! " . s:fontname . ":h" . s:fontsize
+endfunction
+
+call AdjustFontSize(0)
+
+noremap <C-=> :call AdjustFontSize(1)<CR>
+noremap <C--> :call AdjustFontSize(-1)<CR>
 
 " Disable GUI Tabline
 if exists(':GuiTabline')
