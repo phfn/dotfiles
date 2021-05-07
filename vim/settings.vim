@@ -82,6 +82,6 @@ if has("win32")
 	nnoremap <leader>S :vs term://powershell<CR>
 endif
 if has("unix")
-	nnoremap <leader>s :term://bash<CR>
+	nnoremap <leader>s :term<CR>
 	nnoremap <leader>S :vs term://bash<CR>
 endif
