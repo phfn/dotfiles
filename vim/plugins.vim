@@ -84,6 +84,7 @@ map <leader>gD :Gvdiffsplit!<CR>
 map <leader>get :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>
+map <leader>g :G 
 
 " vim in firefox
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
