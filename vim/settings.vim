@@ -41,7 +41,7 @@ set termguicolors
 
 map <leader>so :w <bar> :source $MYVIMRC<CR>
 map <Tab> :tabNext<CR>
-map <leader><Tab> <C-W>w
+map <leader><Tab> :tabnew<CR>
 
 map <leader>q <C-W>q
 
