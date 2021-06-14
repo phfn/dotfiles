@@ -1,6 +1,8 @@
 syntax on
 let mapleader = " "
 
+" when opening a file, change dir to dir of the file
+cd %:h
 " always show signcolumns
 set signcolumn=yes
 

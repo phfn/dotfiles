@@ -1,4 +1,3 @@
-cd %:h
 " Enable Mouse
 set mouse=a
 
