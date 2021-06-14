@@ -95,6 +95,9 @@ Plug 'yuezk/vim-js'
 
 " react highlighting
 Plug 'MaxMEllon/vim-jsx-pretty'
+
+" intention lines
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 colorscheme darcula
