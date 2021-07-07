@@ -1,6 +1,8 @@
 syntax on
 let mapleader = " "
 
+" when opening a file, change dir to dir of the file
+cd %:h
 " always show signcolumns
 set signcolumn=yes
 
@@ -41,7 +43,7 @@ set termguicolors
 
 map <leader>so :w <bar> :source $MYVIMRC<CR>
 map <Tab> :tabNext<CR>
-map <leader><Tab> <C-W>w
+map <leader><Tab> :tabnew<CR>
 
 map <leader>q <C-W>q
 
