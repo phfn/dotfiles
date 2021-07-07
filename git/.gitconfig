@@ -1,0 +1,31 @@
+# This is Git's per-user configuration file.
+[user]
+name = Paul Hoffmann
+email = phfn@phfn.de
+[core]
+	editor = vim
+    excludesfile = ~/.gitignore
+[alias]
+    # list branches ordered by change time
+    br = "!git for-each-ref --format='%(committerdate:short),%(authorname),%(refname:short)' --sort=committerdate refs/heads/ | column -t -s ','"
+    bra = branch -a
+    ci = commit
+    co = checkout
+    # Show minimal diffs instead of whole lines changed and highlight trailing whitespace in diffs
+    df = diff --color-words=. --ws-error-highlight=new,old
+    dfs = diff --staged --ws-error-highlight=new,old
+    # Find a string but omit strings with lendth over 400 chars
+    find = "!f() { str=${@}; echo $str; git grep -E -e$str --and --not -e '.{400}'; }; f"
+    ; i = update-index --assume-unchanged
+    l = log --oneline --graph --decorate
+    lg = log -p
+    ls = ls-files
+    # push current branch
+    pusho = "!git push --set-upstream origin \"$(git rev-parse --abbrev-ref HEAD)\""
+    st = status
+    # stash unstaged only
+    ; stuo = "!f() { git stash save --keep-index "Unstaged only" && git stash save "Staged only" && git stash pop && git add . --all && git status; }; f"
+    # uncommit last
+    uncommit = reset --soft HEAD^
+    unstage = reset HEAD --
+	wt = worktree

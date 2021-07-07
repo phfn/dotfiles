@@ -5,3 +5,4 @@ echo "source ~/dotfiles/ginit.vim" >> ~/.config/nvim/ginit.vim
 echo "source ~/dotfiles/.tmux.conf" >> ~/.tmux.conf
 cp ~/dotfiles/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 cp ~/dotfiles/vim/coc-settings.json ~/.vim/coc-settings.json
+~/dotfiles/git/init.sh
