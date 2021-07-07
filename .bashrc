@@ -14,3 +14,4 @@ sv(){
 	fi
 }
 alias vs="deactivate"
+alias g="git"
