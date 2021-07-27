@@ -1,5 +1,6 @@
 echo "source ~/dotfiles/.vimrc" >> ~/.vimrc
 mkdir -p ~/.config/nvim
+mkdir -p ~/.vim/
 echo "source ~/dotfiles/init.vim" >> ~/.config/nvim/init.vim
 echo "source ~/dotfiles/ginit.vim" >> ~/.config/nvim/ginit.vim
 echo "source ~/dotfiles/.tmux.conf" >> ~/.tmux.conf
