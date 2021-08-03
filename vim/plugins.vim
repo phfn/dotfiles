@@ -101,4 +101,7 @@ Plug 'Yggdroot/indentLine'
 call plug#end()
 
 colorscheme darcula
+" transparant backgroud
+hi Normal guibg=NONE ctermbg=NONE
+
 map <leader>f :GFiles<CR>
