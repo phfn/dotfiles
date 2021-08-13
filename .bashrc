@@ -15,3 +15,5 @@ sv(){
 }
 alias vs="deactivate"
 alias g="git"
+alias pacman="sudo pacman"
+alias apt="sudo apt"
