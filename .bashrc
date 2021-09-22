@@ -17,3 +17,13 @@ alias vs="deactivate"
 alias g="git"
 alias pacman="sudo pacman"
 alias apt="sudo apt"
+alias snvim="sudo -E nvim"
+
+mdview(){
+	if [ -n "$1" ]
+	then
+		retext --preview $1 >/dev/null 2>&1 &
+	else
+		retext --preview *.md >/dev/null 2>&1 &
+	fi
+}
