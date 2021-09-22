@@ -3,7 +3,7 @@
 name = Paul Hoffmann
 email = phfn@phfn.de
 [core]
-	editor = vim
+	editor = nvim
     excludesfile = ~/.gitignore
 [alias]
     # list branches ordered by change time
