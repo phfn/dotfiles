@@ -173,13 +173,29 @@ keys = [
 
 # MY SHIFT
     EzKey("M-<Return>", lazy.spawn("alacritty")),
-    EzKey("A-<space>", lazy.spawn("rofi -show run")),
-    EzKey("M-<space>", lazy.spawn("rofi -show drun")),
+    EzKey("A-<space>", lazy.spawn("rofi -show drun -show-icons")),
+    EzKey("A-S-<space>", lazy.spawn("rofi -show run")),
     EzKey("M-r", lazy.spawncmd()),
     EzKey("M-S-d", lazy.spawn("dmenu_run")),
     EzKey("M-f", lazy.spawn("firefox")),
     EzKey("M-e", lazy.spawn("thunar")),
+    EzKey("M-S-k", lazy.spawn("keepmenu")),
+    EzKey("M-<space>", lazy.spawn("switch_layout")),
+    EzKey("M-x", lazy.spawn("arcolinux-logout")),
+
+
+#Music
+Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
+Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
+Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
+Key([], "XF86AudioStop", lazy.spawn("playerctl stop")),
+Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 10")),
+Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 10")),
+Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer set Master 10%+")),
+Key([], "XF86AudioLowerVolume", lazy.spawn("amixer set Master 10%-")),
+Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master 1+ toggle")),
     ]
+
 
 groups = [
     Group(
@@ -202,7 +218,21 @@ groups = [
         name="5"
     ),
     Group(
-        name="6"
+        name="6",
+        label="chat",
+        matches = [
+            Match(
+                wm_class=[
+                    "teams",
+                    "teams-for-linux"
+                    "mattermost-desktop",
+                    "mattermost",
+                    "matterhorn",
+                    "signal"
+                    ]
+                ),
+            Match(title="matterhorn")
+            ],
     ),
     Group(
         name="7",
@@ -221,7 +251,6 @@ groups = [
     ),
     Group(
         name="8",
-        layout="max",
         label="mail",
         matches=[
             Match(
@@ -230,11 +259,13 @@ groups = [
                     "Mail",
                     "thunderbird",
                     "Thunderbird",
-                    "ThunderBird"
+                    "ThunderBird",
+                    "evolution",
+                    "Evolution"
                 ]
             )
         ],
-        spawn=["thunderbird"]
+        # spawn=["evolution"]
     ),
     Group(
         name="9",
@@ -250,7 +281,12 @@ groups = [
                 )
             ],
         spawn=["keepassxc"]
-    )
+    ),
+    Group(
+            name="p",
+            label="",
+            spawn="nextcloud"
+            )
         ]
 
 for i in groups:
@@ -263,7 +299,7 @@ for i in groups:
 
 def init_layout_theme():
     return {"margin": 0,
-            "border_width": 1,
+            "border_width": 3,
             "border_focus": "#5e81ac",
             "border_normal": "#4c566a",
             "margin_on_single": 0
@@ -361,12 +397,6 @@ def init_widgets_list():
                widget.Clock(**widget_defaults | dict(
                         format="%H:%M"
                         )),
-               widget.Sep(),
-               widget.Systray(
-                        background=colors[1],
-                        icon_size=20,
-                        padding = 4
-                        ),
               ]
     return widgets_list
 
@@ -375,6 +405,14 @@ widgets_list = init_widgets_list()
 
 def init_widgets_screen1():
     widgets_screen1 = init_widgets_list()
+    widgets_screen1.extend([
+        widget.Sep(),
+        widget.Systray(
+            background=colors[1],
+            icon_size=20,
+            padding = 4
+            )
+    ])
     return widgets_screen1
 
 def init_widgets_screen2():
@@ -388,7 +426,7 @@ screens =  [
                     size=26,
                     opacity=0.8
                     ),
-                    wallpaper="/home/phfn/Downloads/archbtw.png",
+                    wallpaper="/usr/share/backgrounds/archlinux/archbtw.png",
                     wallpaper_mode="fill"
                 ),
             Screen(
@@ -397,7 +435,7 @@ screens =  [
                     size=26,
                     opacity=0.8
                     ),
-                    wallpaper = "/home/phfn/wallpapers/The_Witcher_Courtesan.jpg",
+                    wallpaper = "/usr/share/backgrounds/archlinux/archbtw.png",
                     wallpaper_mode="fill"
 
                 )
@@ -457,8 +495,9 @@ floating_layout = layout.Floating(float_rules=[
 
 ],  fullscreen_border_width = 0, border_width = 0)
 auto_fullscreen = True
+# auto_fullscreen = False
 
-focus_on_window_activation = "focus" # or smart
+focus_on_window_activation = "smart" # or smart
 
 wmname = "LG3D"
 
