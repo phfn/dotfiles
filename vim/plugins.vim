@@ -1,4 +1,4 @@
-"install Plugins
+""install Plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
   \| endif
@@ -19,14 +19,14 @@ let g:NERDTreeQuitOnOpen = 1
 Plug 'Xuyuanp/nerdtree-git-plugin' 
 
 "icons in filetree
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Plug 'ryanoasis/vim-devicons'
+ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+ Plug 'ryanoasis/vim-devicons'
 
 "linter
-" Plug 'vim-syntastic/syntastic'
-" better than syntastics?
-" Plug 'dense-analysis/ale'
-" let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements','autoimport', 'remove_trailing_lines', 'trim_whitespace']}
+ " Plug 'vim-syntastic/syntastic'
+ " better than syntastics?
+ Plug 'dense-analysis/ale'
+ let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements','autoimport', 'remove_trailing_lines', 'trim_whitespace']}
 
 " better search 
 " Plug 'ctrlpvim/ctrlp.vim'
