@@ -1,0 +1,15 @@
+default partial alphanumeric_keys
+xkb_symbols "alt-intl" {
+   include "us(intl)"
+
+   key <AD03> { [     e,          E,          EuroSign               ] };
+   key <AD07> { [     u,          U,         udiaeresis,  Udiaeresis ] };
+   key <AD09> { [     o,          O,         odiaeresis,  Odiaeresis ] };
+   key <AC01> { [     a,          A,        adiaeresis,   Adiaeresis ] };
+   key <AC02> { [     s,          S,           ssharp,    U1E9E      ] };
+ 
+   key <AD11> {	[ bracketleft,	braceleft,	udiaeresis,  Udiaeresis  ] };
+   key <AC10> {	[ semicolon,	colon,		odiaeresis,  Odiaeresis  ] };
+   key <AC11> {	[ apostrophe,	quotedbl,	adiaeresis,   Adiaeresis ] };
+   
+};
