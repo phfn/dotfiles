@@ -76,7 +76,7 @@ Plug 'vim-python/python-syntax'
 Plug 'tpope/vim-fugitive'
 map <leader>ga :Git add %<CR> 
 map <leader>gc :Git commit<CR> 
-map <leader>gs :Gstatus<CR> 
+map <leader>gs :G<CR> 
 map <leader>gS :Git status<CR> 
 map <leader>gp :Git push<CR> 
 map <leader>gd :vert Gdiffsplit<CR>
@@ -84,7 +84,6 @@ map <leader>gD :Gvdiffsplit!<CR>
 map <leader>get :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>
-map <leader>g :G 
 
 " vim in firefox
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
