@@ -87,3 +87,4 @@ if has("unix")
 	nnoremap <leader>s :term<CR>
 	nnoremap <leader>S :vs term://bash<CR>
 endif
+au BufEnter *.flex set filetype=c
