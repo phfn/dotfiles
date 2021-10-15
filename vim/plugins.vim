@@ -62,6 +62,7 @@ Plug '907th/vim-auto-save'
 let g:auto_save = 0
 au FileType python let b:auto_save = 1
 au FileType javascript let b:auto_save = 1
+au FileType rust let b:auto_save = 1
 
 " Nice airline
 Plug 'vim-airline/vim-airline'
@@ -84,6 +85,7 @@ map <leader>gD :Gvdiffsplit!<CR>
 map <leader>get :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>
+au FileType set spell<CR>
 
 " vim in firefox
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -97,6 +99,8 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 
 " intention lines
 Plug 'Yggdroot/indentLine'
+
+Plug 'jremmen/vim-ripgrep'
 call plug#end()
 
 colorscheme darcula
