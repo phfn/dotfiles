@@ -27,3 +27,4 @@ mdview(){
 		retext --preview *.md >/dev/null 2>&1 &
 	fi
 }
+alias ll="ls -la"
