@@ -63,6 +63,7 @@ let g:auto_save = 0
 au FileType python let b:auto_save = 1
 au FileType javascript let b:auto_save = 1
 au FileType rust let b:auto_save = 1
+au FileType markdown let b:auto_save = 1
 
 " Nice airline
 Plug 'vim-airline/vim-airline'
@@ -107,4 +108,5 @@ colorscheme darcula
 " transparant backgroud
 hi Normal guibg=NONE ctermbg=NONE
 
-map <leader>f :Files<CR>
+map <leader>f :GFiles<CR>
+map <leader>F :Files<CR>
