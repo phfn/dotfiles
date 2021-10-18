@@ -107,4 +107,4 @@ colorscheme darcula
 " transparant backgroud
 hi Normal guibg=NONE ctermbg=NONE
 
-map <leader>f :GFiles<CR>
+map <leader>f :Files<CR>
