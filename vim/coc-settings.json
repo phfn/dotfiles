@@ -1,6 +1,0 @@
-{
-		"suggest.noselect": false,
-		"diagnostic.messageTarget":"echo",
-		"diagnostic.enableHighlightLineNumber": false,
-		"diagnostic.checkCurrentLine": true
-}

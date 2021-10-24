@@ -43,10 +43,6 @@ map <leader>c<leader> <Plug>CommentaryLine
 " Add spaces after comment delimiters by default
 " let g:NERDSpaceDelims = 1
 
-"autpcomletion in python
-" Plug 'davidhalter/jedi-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-source ~/dotfiles/vim/coc.vim
 
 " use s to surround
 Plug 'tpope/vim-surround'
