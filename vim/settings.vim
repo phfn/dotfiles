@@ -3,6 +3,7 @@ let mapleader = " "
 
 " when opening a file, change dir to dir of the file
 " cd %:h
+set mouse=a
 " always show signcolumns
 set signcolumn=yes
 
