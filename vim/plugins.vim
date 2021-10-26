@@ -33,16 +33,26 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
  Plug 'ryanoasis/vim-devicons'
 
 " better search 
-" Plug 'ctrlpvim/ctrlp.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/plenary.nvim'
+nnoremap <leader>f<leader> :Telescope git_files<CR>
+nnoremap <leader>ff :Telescope buffers<CR><ESC>k
+nnoremap <leader>F :Telescope find_files<CR>
+nnoremap <leader>fF :Telescope oldfiles<CR>
+nnoremap <leader>fg :Telescope live_grep<CR>
+nnoremap <leader>ft :Telescope builtin<CR>
+nnoremap <leader>fh :Telescope help_tags<CR>
+nnoremap <leader>fs <cmd>Telescope grep_string<CR><ESC>
+nnoremap z= <cmd>Telescope spell_suggest<CR><ESC>
+nnoremap "" <cmd>Telescope registers<CR><ESC>
 
 " autoclose ()[]{}
 Plug 'jiangmiao/auto-pairs'
 
 " comments things
 Plug 'tpope/vim-commentary'
-map <leader>c<leader> <Plug>CommentaryLine
+nmap <leader>c<leader> <Plug>CommentaryLine
+vmap <leader>c<leader> <Plug>Commentary
 " Plug 'preservim/nerdcommenter'
 " Add spaces after comment delimiters by default
 " let g:NERDSpaceDelims = 1
@@ -103,16 +113,12 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'jremmen/vim-ripgrep'
 
+" flex syntax
 Plug 'justinmk/vim-syntax-extra'
+
 call plug#end()
 
 colorscheme darcula
 " transparant backgroud
 hi Normal guibg=NONE ctermbg=NONE
-
-map <leader>f :GFiles<CR>
-map <leader>F :Files<CR>
-
-" lsp config
 source /home/phfn/dotfiles/vim/lsp.vim
-let g:vsnip_filetypes = {}
