@@ -4,6 +4,16 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| endif
 
 call plug#begin()
+" lsp
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
+Plug 'hrsh7th/cmp-path'
+
 " let it look like intellij
 Plug 'doums/darcula'
 
@@ -21,12 +31,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "icons in filetree
  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
  Plug 'ryanoasis/vim-devicons'
-
-"linter
- " Plug 'vim-syntastic/syntastic'
- " better than syntastics?
- Plug 'dense-analysis/ale'
- let g:ale_fixers = {'python': ['add_blank_lines_for_python_control_statements','autoimport', 'remove_trailing_lines', 'trim_whitespace']}
 
 " better search 
 " Plug 'ctrlpvim/ctrlp.vim'
@@ -98,6 +102,8 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'Yggdroot/indentLine'
 
 Plug 'jremmen/vim-ripgrep'
+
+Plug 'justinmk/vim-syntax-extra'
 call plug#end()
 
 colorscheme darcula
@@ -106,3 +112,7 @@ hi Normal guibg=NONE ctermbg=NONE
 
 map <leader>f :GFiles<CR>
 map <leader>F :Files<CR>
+
+" lsp config
+source /home/phfn/dotfiles/vim/lsp.vim
+let g:vsnip_filetypes = {}
