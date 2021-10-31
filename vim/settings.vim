@@ -103,3 +103,4 @@ inoremap . .<c-g>u
 inoremap ; ;<c-g>u
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
+au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
