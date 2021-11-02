@@ -2,6 +2,7 @@ lua << EOF
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.pylsp.setup{}
+require'lspconfig'.clangd.setup{}
 require'cmp'.setup { sources = { { name = 'path' } } }
 EOF
 lua << EOF
