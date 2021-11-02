@@ -24,27 +24,18 @@
 # SOFTWARE.
 
 
-from abc import abstractclassmethod, abstractmethod
 import os
 import re
 import socket
 import subprocess
-from typing import Iterable, MutableSequence, Sequence, Union
-import libqtile
+from random import shuffle
 from libqtile.config import Drag, Key, ScratchPad, Screen, Group, Drag, Click, Rule, Match, EzKey, KeyChord
 from libqtile.lazy import lazy
 from libqtile import layout, bar, widget, hook
-from libqtile.widget import Spacer
-from libqtile.hook import subscribe
-from libqtile.backend.base import Window
 from libqtile.core.manager import Qtile
-from libqtile.log_utils import logger
-from libqtile.utils import guess_terminal
 os.system("export PATH=/home/phfn/.local/bin:$PATH")
-from typing import List
 
-
-#mod4 or mod = super key
+# mod4 or mod = super key
 super = "mod4"
 alt = "mod1"
 ctrl = "control"
@@ -59,20 +50,76 @@ def window_to_prev_group(qtile):
         i = qtile.groups.index(qtile.currentGroup)
         qtile.currentWindow.togroup(qtile.groups[i - 1].name)
 
+
 @lazy.function
 def window_to_next_group(qtile):
     if qtile.currentWindow is not None:
         i = qtile.groups.index(qtile.currentGroup)
         qtile.currentWindow.togroup(qtile.groups[i + 1].name)
 
+
 @hook.subscribe.startup_once
-def run_lock():
+def start_xdg():
+    blacklist = [
+            "pamac-tray.desktop",
+            "pamac-tray-budgie.desktop",
+            "xfce4-notes-autostart.desktop",
+            "autorandr.desktop",
+            ]
+    autostart_path = "/etc/xdg/autostart"
+    for file in os.listdir(autostart_path):
+        if file in blacklist:
+            continue
+        os.system(f"dex {autostart_path}/{file}")
+
+
+@hook.subscribe.startup_complete
+def set_wallpaper():
+    # Pick first location and the first files in there
+    backgroud_locations = [
+        "/home/backgrounds/",
+        "/usr/share/backgrounds/manjaro-wallpapers-18.0",
+        "/usr/share/backgrounds/",
+    ]
+
+    for backgroud_location in backgroud_locations:
+        try:
+            wallpapers = [
+                    os.path.join(backgroud_location, file)
+                    for file
+                    in os.listdir(backgroud_location)
+                    ]
+            if not wallpapers:
+                raise FileNotFoundError
+            break
+        except FileNotFoundError:
+            pass
+    shuffle(wallpapers)
+    subprocess.call(
+            ["feh", "--bg-fill", wallpapers[0], "--bg-fill", wallpapers[1]]
+    )
+
+
+@hook.subscribe.startup
+def start_autostart_script():
     path = "/home/phfn/.config/autostart.sh"
     if os.path.exists(path):
         subprocess.call([os.path.expanduser(path)])
+        os.system(
+                os.path.expanduser(path)
+                + " > /home/phfn/.config/autostart.log")
 
 
-     
+@lazy.function
+def spawn_chat_privat(qtile: Qtile):
+    qtile.cmd_spawn("signal-desktop", shell=True)
+    qtile.cmd_spawn("flatpak run com.discordapp.Discord", shell=True)
+
+
+@lazy.function
+def spawn_chat_work(qtile: Qtile):
+    qtile.cmd_spawn("mattermost-desktop", shell=True)
+    qtile.cmd_spawn("teams", shell=True)
 
 
 keys = [
@@ -81,16 +128,17 @@ keys = [
     Key([super], "q", lazy.window.kill()),
     Key([super, "control"], "r", lazy.restart()),
 
-# Change group
+    # Change group
     Key([super], "Tab", lazy.screen.toggle_group()),
-    Key([alt], "Tab", lazy.screen.next_group()),
-    Key([alt, "shift"], "Tab", lazy.screen.prev_group()),
+    Key([alt], "Tab", lazy.group.next_window()),
+    Key([alt, "shift"], "Tab", lazy.group.prev_window()),
+    Key([super, alt], "Tab", lazy.screen.next_group()),
 
-# QTILE LAYOUT KEYS
+    # QTILE LAYOUT KEYS
     Key([super], "n", lazy.layout.normalize()),
     Key([super], "p", lazy.next_layout()),
 
-# CHANGE FOCUS
+    # CHANGE FOCUS
     Key([super], "Up", lazy.layout.up()),
     Key([super], "Down", lazy.layout.down()),
     Key([super], "Left", lazy.layout.left()),
@@ -101,7 +149,7 @@ keys = [
     Key([super], "l", lazy.layout.right()),
 
 
-# RESIZE UP, DOWN, LEFT, RIGHT
+    # RESIZE UP, DOWN, LEFT, RIGHT
     Key([super, "control"], "l",
         lazy.layout.grow_right(),
         lazy.layout.grow(),
@@ -149,52 +197,73 @@ keys = [
 
 
 
-# FLIP LAYOUT FOR BSP
+    # FLIP LAYOUT FOR BSP
     Key([super, "mod1"], "k", lazy.layout.flip_up()),
     Key([super, "mod1"], "j", lazy.layout.flip_down()),
     Key([super, "mod1"], "l", lazy.layout.flip_right()),
     Key([super, "mod1"], "h", lazy.layout.flip_left()),
 
-# MOVE WINDOWS UP OR DOWN BSP LAYOUT
+    # MOVE WINDOWS UP OR DOWN BSP LAYOUT
     Key([super, "shift"], "k", lazy.layout.shuffle_up()),
     Key([super, "shift"], "j", lazy.layout.shuffle_down()),
     Key([super, "shift"], "h", lazy.layout.shuffle_left()),
     Key([super, "shift"], "l", lazy.layout.shuffle_right()),
 
-# MOVE WINDOWS UP OR DOWN MONADTALL/MONADWIDE LAYOUT
+    # MOVE WINDOWS UP OR DOWN MONADTALL/MONADWIDE LAYOUT
     Key([super, "shift"], "Up", lazy.layout.shuffle_up()),
     Key([super, "shift"], "Down", lazy.layout.shuffle_down()),
     Key([super, "shift"], "Left", lazy.layout.swap_left()),
     Key([super, "shift"], "Right", lazy.layout.swap_right()),
 
-# TOGGLE FLOATING LAYOUT
+    # TOGGLE FLOATING LAYOUT
     Key([super, "shift"], "space", lazy.window.toggle_floating()),
     Key([super, "shift"], "x", lazy.shutdown()),
 
-# MY SHIFT
+    # MY SHIFT
     EzKey("M-<Return>", lazy.spawn("alacritty")),
-    EzKey("A-<space>", lazy.spawn("rofi -show drun -show-icons")),
+    EzKey("A-<space>", lazy.spawn("rofi -show drun -show-icons -sorting-method fzf")),
     EzKey("A-S-<space>", lazy.spawn("rofi -show run")),
+    EzKey("M-w", lazy.spawn("rofi -show window -show-icons -sorting-method fzf")),
+    EzKey("M-S-s", lazy.spawn("rofi -show ssh")),
+
+
+    EzKey("M-A-l", lazy.spawn("xflock4")),
     EzKey("M-r", lazy.spawncmd()),
     EzKey("M-S-d", lazy.spawn("dmenu_run")),
     EzKey("M-f", lazy.spawn("firefox")),
+    EzKey("M-A-f", lazy.spawn("firefox -p privat")),
     EzKey("M-e", lazy.spawn("thunar")),
     EzKey("M-S-k", lazy.spawn("keepmenu")),
     EzKey("M-<space>", lazy.spawn("switch_layout")),
     EzKey("M-x", lazy.spawn("arcolinux-logout")),
+    EzKey("M-S-s", lazy.spawn("xfce4-screenshooter -r -c")),
+    EzKey("M-<period>", lazy.spawn("rofimoji")),
+    KeyChord([super], "s",
+        [
+            Key([], "f", lazy.spawn("firefox")),
+            Key([shift], "f", lazy.spawn("firefox -P privat")),
+            Key([], "a", lazy.spawn("alacritty")),
+            Key([], "x", lazy.spawn("xterm")),
+            Key([], "b", lazy.spawn("blueman-manager")),
+            Key([], "p", lazy.spawn("pamac-manager")),
+            Key([], "c", spawn_chat_work),
+            Key([shift], "c", spawn_chat_privat),
+        ]
+    ),
 
 
-#Music
-Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
-Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
-Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
-Key([], "XF86AudioStop", lazy.spawn("playerctl stop")),
-Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 10")),
-Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 10")),
-Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer set Master 10%+")),
-Key([], "XF86AudioLowerVolume", lazy.spawn("amixer set Master 10%-")),
-Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master 1+ toggle")),
-    ]
+    # Music
+    Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
+    Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
+    Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
+    Key([], "XF86AudioStop", lazy.spawn("playerctl stop")),
+    Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight -inc 10")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -dec 10")),
+    # Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D pulse set Master 1+ on && amixer set Master 10%+")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer set Master 10%+")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer set Master 10%-")),
+    Key([], "XF86AudioMute", lazy.spawn("amixer -D pulse set Master 1+ toggle")),
+]
 
 
 groups = [
@@ -220,7 +289,7 @@ groups = [
     Group(
         name="6",
         label="chat",
-        matches = [
+        matches=[
             Match(
                 wm_class=[
                     "teams",
@@ -238,7 +307,7 @@ groups = [
         name="7",
         layout="max",
         label="vid",
-        matches = [
+        matches=[
             Match(
                 wm_class=[
                     "Vlc",
@@ -297,6 +366,7 @@ for i in groups:
         Key([super, "shift"], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
     ])
 
+
 def init_layout_theme():
     return {"margin": 0,
             "border_width": 3,
@@ -304,6 +374,7 @@ def init_layout_theme():
             "border_normal": "#4c566a",
             "margin_on_single": 0
             }
+
 
 layout_theme = init_layout_theme()
 
@@ -318,15 +389,15 @@ layouts = [
 # COLORS FOR THE BAR
 
 colors = [
-        ["#2F343F", "#2F343F"], # color 0
-        ["#2F343F", "#2F343F"], # color 1
-        ["#c0c5ce", "#c0c5ce"], # color 2
-        ["#fba922", "#fba922"], # color 3
-        ["#3384d0", "#3384d0"], # color 4
-        ["#f3f4f5", "#f3f4f5"], # color 5
-        ["#cd1f3f", "#cd1f3f"], # color 6
-        ["#62FF00", "#62FF00"], # color 7
-        ["#6790eb", "#6790eb"], # color 8
+        ["#2F343F", "#2F343F"],  # color 0
+        ["#2F343F", "#2F343F"],  # color 1
+        ["#c0c5ce", "#c0c5ce"],  # color 2
+        ["#fba922", "#fba922"],  # color 3
+        ["#3384d0", "#3384d0"],  # color 4
+        ["#f3f4f5", "#f3f4f5"],  # color 5
+        ["#cd1f3f", "#cd1f3f"],  # color 6
+        ["#62FF00", "#62FF00"],  # color 7
+        ["#6790eb", "#6790eb"],  # color 8
         ["#a9a9a9", "#a9a9a9"]  # color 9
         ]
 
@@ -335,29 +406,29 @@ colors = [
 
 widget_defaults = dict(
         font="Noto Sans",
-        fontsize = 12,
-        padding = 2,
+        fontsize=12,
+        padding=2,
         background=colors[1]
         )
 thick = dict(
-        linewidth = 1,
-        padding = 10,
-        foreground = colors[2],
-        background = colors[1]
+        linewidth=1,
+        padding=10,
+        foreground=colors[2],
+        background=colors[1]
         )
 
 def init_widgets_list():
     prompt = f"{os.environ['USER']}@{socket.gethostname()}"
     widgets_list = [
                widget.GroupBox(
-                        # font="FontAwesome",
-                        **widget_defaults | dict(
-                        disable_drag = True,
-                        active = colors[9],
-                        inactive = colors[5],
-                        highlight_method = "line",
-                        this_current_screen_border = colors[8],
-                        foreground = colors[2],
+                   # font="FontAwesome",
+                   **widget_defaults | dict(
+                       disable_drag=True,
+                       active=colors[9],
+                       inactive=colors[5],
+                       highlight_method="line",
+                       this_current_screen_border=colors[8],
+                       foreground=colors[2],
                         )),
                widget.Sep(**thick),
                widget.CurrentLayout(**widget_defaults),
@@ -366,12 +437,6 @@ def init_widgets_list():
                widget.WindowName(
                    **widget_defaults
                         ),
-               widget.ThermalSensor(**widget_defaults |dict(
-                        foreground_alert = colors[6],
-                        padding = 3,
-                        threshold = 80,
-                        # fmt="{temperature:02d}"
-                        )),
                widget.Sep(),
                widget.Battery(
                        format="{hour:d}:{min:02d}  {percent:2.0%}"
@@ -391,14 +456,16 @@ def init_widgets_list():
                    )),
                widget.Sep(),
                widget.Clock(**widget_defaults | dict(
-                        format="%Y-%m-%d"
+                        format="%H:%M"
                         )),
                widget.Sep(),
                widget.Clock(**widget_defaults | dict(
-                        format="%H:%M"
+                        # format="%Y-%m-%d"
+                        format="%d.%m.%Y"
                         )),
               ]
     return widgets_list
+
 
 widgets_list = init_widgets_list()
 
@@ -410,33 +477,37 @@ def init_widgets_screen1():
         widget.Systray(
             background=colors[1],
             icon_size=20,
-            padding = 4
+            padding=4
             )
     ])
     return widgets_screen1
+
 
 def init_widgets_screen2():
     widgets_screen2 = init_widgets_list()
     return widgets_screen2
 
-screens =  [
+
+screens = [
             Screen(
                 top=bar.Bar(
-                    widgets=init_widgets_screen1(),
-                    size=26,
-                    opacity=0.8
+                        widgets=init_widgets_screen1(),
+                        size=26,
+                        opacity=0.8
                     ),
-                    wallpaper="/usr/share/backgrounds/archlinux/archbtw.png",
-                    wallpaper_mode="fill"
+                # wallpaper=wallpapers[0],
+                # wallpaper="/usr/share/backgrounds/manjaro-wallpapers-18.0/manjaro_maia_logo.jpg",
+                # wallpaper_mode="fill"
                 ),
             Screen(
                 top=bar.Bar(
-                    widgets=init_widgets_screen2(),
-                    size=26,
-                    opacity=0.8
+                        widgets=init_widgets_screen2(),
+                        size=26,
+                        opacity=0.8
                     ),
-                    wallpaper = "/usr/share/backgrounds/archlinux/archbtw.png",
-                    wallpaper_mode="fill"
+                # wallpaper="/usr/share/backgrounds/manjaro-wallpapers-18.0/play.jpg",
+                # wallpaper=wallpapers[1] if len(wallpapers) > 1 else wallpapers[0],
+                # wallpaper_mode="fill"
 
                 )
             ]
@@ -461,6 +532,7 @@ def set_floating(window):
     if (window.window.get_wm_transient_for()
             or window.window.get_wm_type() in floating_types):
         window.floating = True
+
 
 floating_types = ["notification", "toolbar", "splash", "dialog"]
 
@@ -492,12 +564,13 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'Open File'},
     {'wname': 'pinentry'},
     {'wmclass': 'ssh-askpass'},
+    {'wmclass': 'zoom', 'wname': 'chat'},
 
-],  fullscreen_border_width = 0, border_width = 0)
-auto_fullscreen = True
-# auto_fullscreen = False
+],  fullscreen_border_width=0, border_width=0)
+# auto_fullscreen = True
+auto_fullscreen = False
 
-focus_on_window_activation = "smart" # or smart
+focus_on_window_activation = "smart"  # or smart
 
 wmname = "LG3D"
 
@@ -525,4 +598,5 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='ssh-askpass'),  # ssh-askpass
     Match(title='branchdialog'),  # gitk
     Match(title='pinentry'),  # GPG key password entry
+    Match(title=re.compile('Android Emulator*')),
 ])
