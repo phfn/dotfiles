@@ -230,7 +230,6 @@ keys = [
     EzKey("M-A-l", lazy.spawn("xflock4")),
     EzKey("M-r", lazy.spawncmd()),
     EzKey("M-S-d", lazy.spawn("dmenu_run")),
-    EzKey("M-f", lazy.spawn("firefox")),
     EzKey("M-A-f", lazy.spawn("firefox -p privat")),
     EzKey("M-e", lazy.spawn("thunar")),
     EzKey("M-S-k", lazy.spawn("keepmenu")),
@@ -587,6 +586,55 @@ keys.extend([
     Key([super], "q", lazy.function(trash.append_currend_window)),
     Key([super, "shift"], "q", lazy.window.kill()),
     Key([super, "shift"], "e", lazy.function(trash.pop_to_current_group))
+    ])
+
+def set_browser(browser: str):
+    subprocess.run(
+            f"xdg-mime default {browser} x-scheme-handler/http",
+            shell=True,
+        )
+    subprocess.run(
+            f"xdg-mime default {browser} x-scheme-handler/https",
+            shell=True,
+        )
+
+from qtile_profiles import Profile, ProfileManager
+
+work = Profile(
+        programs={
+            "firefox": "firefox",
+            "thunderbird": "flatpak run org.mozilla.Thunderbird",
+            "teams": "chromium --app=https://teams.office.com",
+            },
+        init=[
+            ("web", ["firefox"]),
+            ("chat", ["mattermost-desktop", "teams"]),
+            ("mail", ["tunderbird"]),
+            ("kp", ["keepassxc"]),
+            ],
+        on_load=lambda qtile: set_browser("firefox.desktop")
+        )
+privat = Profile(
+        programs={
+            "firefox": "firefox -P privat",
+            "thunderbird": "thunderbird",
+            "discord": "discord",
+            },
+        init=[
+            ("web", ["firefox"]),
+            ("chat", ["signal-desktop", "discord"]),
+            ("mail", ["thunderbird"]),
+            ("kp", ["keepassxc"]),
+            ],
+        on_load=lambda qtile: set_browser("firefox-privat.desktop")
+        )
+
+profiles = ProfileManager([work, privat])
+
+keys.extend([
+    Key([super], "p", lazy.function(profiles.next_profile)),
+    Key([super], "f", lazy.function(profiles.spawn, "firefox")),
+    Key([super], "i", lazy.function(profiles.current_profile.spawn_init)),
     ])
 
 floating_layout = layout.Floating(float_rules=[
