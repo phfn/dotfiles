@@ -1,0 +1,3 @@
+qtile-window-trashbin
+qtile-profiles
+autorandr-rofi
