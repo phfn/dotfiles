@@ -230,6 +230,7 @@ keys = [
     EzKey("M-A-l", lazy.spawn("xflock4")),
     EzKey("M-r", lazy.spawncmd()),
     EzKey("M-S-d", lazy.spawn("dmenu_run")),
+    EzKey("M-p", lazy.spawn("autorandr-rofi")),
     EzKey("M-A-f", lazy.spawn("firefox -p privat")),
     EzKey("M-e", lazy.spawn("thunar")),
     EzKey("M-S-k", lazy.spawn("keepmenu")),
@@ -350,19 +351,22 @@ groups = [
             ],
         spawn=["keepassxc"]
     ),
+        ]
+
+for group in groups:
+    keys.extend([
+        # CHANGE WORKSPACES
+        Key([super], group.name, lazy.group[group.name].toscreen()),
+        Key([super, ctrl, "shift"], group.name, lazy.window.togroup(group.name)),
+        Key([super, "shift"], group.name, lazy.window.togroup(group.name) , lazy.group[group.name].toscreen()),
+    ])
+
+groups.extend([
     Group(
-            name="p",
+            name="nextcloud",
             label="",
             spawn="nextcloud"
             )
-        ]
-
-for i in groups:
-    keys.extend([
-        # CHANGE WORKSPACES
-        Key([super], i.name, lazy.group[i.name].toscreen()),
-        Key([super, ctrl, "shift"], i.name, lazy.window.togroup(i.name)),
-        Key([super, "shift"], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
     ])
 
 
@@ -632,7 +636,7 @@ privat = Profile(
 profiles = ProfileManager([work, privat])
 
 keys.extend([
-    Key([super], "p", lazy.function(profiles.next_profile)),
+    Key([super, shift], "p", lazy.function(profiles.next_profile)),
     Key([super], "f", lazy.function(profiles.spawn, "firefox")),
     Key([super], "i", lazy.function(profiles.current_profile.spawn_init)),
     ])
