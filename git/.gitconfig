@@ -31,3 +31,5 @@ email = phfn@phfn.de
     uncommit = reset --soft HEAD^
     unstage = reset HEAD --
 	wt = worktree
+[pull]
+	ff = only
