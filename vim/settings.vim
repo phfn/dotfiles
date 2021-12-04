@@ -38,6 +38,16 @@ set softtabstop=4
 set shiftwidth=4
 set smartindent
 
+au BufEnter *.js set expandtab
+au BufEnter *.js set tabstop=2
+au BufEnter *.js set softtabstop=2
+au BufEnter *.js set shiftwidth=2
+au BufEnter *.css set expandtab
+au BufEnter *.css set tabstop=2
+au BufEnter *.css set softtabstop=2
+au BufEnter *.css set shiftwidth=2
+
+
 let g:python_highlight_all = 1
 " enable cool coulours
 set termguicolors
@@ -104,3 +114,7 @@ inoremap ; ;<c-g>u
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+au BufEnter *.h set wrap
+set autochdir
+nnoremap <C-o> <C-o>zz
+" nnoremap <leader>lf mzggVG=`z

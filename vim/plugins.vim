@@ -92,13 +92,16 @@ Plug 'vim-python/python-syntax'
 " git support
 Plug 'tpope/vim-fugitive'
 map <leader>ga :Git add %<CR> 
+map <leader>gA :Git add --patch %<CR> 
 map <leader>gc :Git commit<CR> 
+map <leader>gC :Git commit --amend<CR> 
 map <leader>gs :G<CR> 
 map <leader>gS :Git status<CR> 
 map <leader>gp :Git push<CR> 
 map <leader>gd :vert Gdiffsplit<CR>
 map <leader>gD :Gvdiffsplit!<CR>
 map <leader>get :diffget<CR>
+map <leader>gut :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>
 au FileType set spell<CR>
@@ -116,11 +119,15 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 " intention lines
 Plug 'Yggdroot/indentLine'
 
-Plug 'jremmen/vim-ripgrep'
-
 " flex syntax
 Plug 'justinmk/vim-syntax-extra'
 
+"rust shit 
+Plug 'simrat39/rust-tools.nvim'
+
+
+Plug 'mfussenegger/nvim-jdtls'
+Plug 'github/copilot.vim'
 call plug#end()
 
 colorscheme darcula
@@ -142,4 +149,12 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+require 'colorizer'.setup {
+  'css';
+  'javascript';
+  html = {
+    mode = 'foreground';
+  }
+}
 EOF
+lua require('rust-tools').setup({})
