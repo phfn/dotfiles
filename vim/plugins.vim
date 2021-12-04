@@ -128,6 +128,9 @@ Plug 'simrat39/rust-tools.nvim'
 
 Plug 'mfussenegger/nvim-jdtls'
 Plug 'github/copilot.vim'
+
+Plug 'tami5/lspsaga.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 colorscheme darcula
