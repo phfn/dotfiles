@@ -125,7 +125,6 @@ call plug#end()
 colorscheme darcula
 " transparant backgroud
 hi Normal guibg=NONE ctermbg=NONE
-source /home/phfn/dotfiles/vim/lsp.vim
 
 
 lua <<EOF
