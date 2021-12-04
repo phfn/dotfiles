@@ -40,9 +40,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
 nnoremap <leader>f<leader> :Telescope git_files<CR>
-nnoremap <leader>ff :Telescope buffers<CR><ESC>k
+nnoremap <leader>fv :Telescope git_files cwd=~/dotfiles/<CR>
+nnoremap <leader>fb :Telescope buffers<CR><ESC>k
 nnoremap <leader>F :Telescope find_files<CR>
-nnoremap <leader>fF :Telescope oldfiles<CR>
+nnoremap <leader>fr :Telescope oldfiles<CR>
 nnoremap <leader>fg :Telescope live_grep<CR>
 nnoremap <leader>ft :Telescope builtin<CR>
 nnoremap <leader>fh :Telescope help_tags<CR>
