@@ -139,6 +139,7 @@ colorscheme darcula
 hi Normal guibg=NONE ctermbg=NONE
 hi LineNr guibg=NONE ctermbg=NONE
 hi SignColumn guibg=NONE ctermbg=NONE
+set signcolumn=auto:1-2
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
