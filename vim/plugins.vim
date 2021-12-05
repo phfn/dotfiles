@@ -52,7 +52,7 @@ nnoremap z= <cmd>Telescope spell_suggest<CR><ESC>
 nnoremap "" <cmd>Telescope registers<CR><ESC>
 
 " autoclose ()[]{}
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 
 " comments things
 Plug 'tpope/vim-commentary'

@@ -1,5 +1,6 @@
 lua << EOF
 require'cmp'.setup { sources = { { name = 'path' } } }
+require('nvim-autopairs').setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.pylsp.setup{}
