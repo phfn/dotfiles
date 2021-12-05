@@ -6,6 +6,7 @@ require'lspconfig'.rust_analyzer.setup{}
  -- remember to 'pip install python-lsp-black'
 require'lspconfig'.pylsp.setup{ settings = { pylsp = { plugins = {
 	pycodestyle = { enabled = false },
+	pyflakes = { enabled = false },
 	pylint = {
 		enabled = true,
 		args = { "--max-line-length=88", }
@@ -101,4 +102,11 @@ buf_set_keymap('n', '<space>Q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
 buf_set_keymap('n', '<space>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
 buf_set_keymap("n", "<ESC>", "<cmd>Lspsaga close_floaterm<cr>", opts)
+
+vim.diagnostic.config({
+	underline = {severity = {min=vim.diagnostic.severity.WARN} },
+	virtual_text = {severity = {min=vim.diagnostic.severity.WARN} },
+	float = {source = "always"},
+	severity_sort = true
+	})
 EOF
