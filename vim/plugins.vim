@@ -89,6 +89,7 @@ Plug 'vim-python/python-syntax'
 
 " git support
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 map <leader>ga :Git add %<CR>
 map <leader>gA :Git add --patch %<CR>
 map <leader>gc :Git commit<CR>
