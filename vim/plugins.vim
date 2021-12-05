@@ -134,9 +134,11 @@ Plug 'windwp/nvim-ts-autotag'
 call plug#end()
 
 colorscheme darcula
+
 " transparant backgroud
 hi Normal guibg=NONE ctermbg=NONE
-
+hi LineNr guibg=NONE ctermbg=NONE
+hi SignColumn guibg=NONE ctermbg=NONE
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
