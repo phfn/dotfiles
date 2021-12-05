@@ -30,13 +30,13 @@ map <leader>t :NERDTreeToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
 
 "git in filetree
-Plug 'Xuyuanp/nerdtree-git-plugin' 
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 "icons in filetree
  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
  Plug 'ryanoasis/vim-devicons'
 
-" better search 
+" better search
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
 nnoremap <leader>f<leader> :Telescope git_files<CR>
@@ -55,12 +55,9 @@ nnoremap "" <cmd>Telescope registers<CR><ESC>
 Plug 'windwp/nvim-autopairs'
 
 " comments things
-Plug 'tpope/vim-commentary'
-nmap <leader>c<leader> <Plug>CommentaryLine
-vmap <leader>c<leader> <Plug>Commentary
-" Plug 'preservim/nerdcommenter'
-" Add spaces after comment delimiters by default
-" let g:NERDSpaceDelims = 1
+Plug 'numToStr/Comment.nvim'
+nmap <leader>c<leader> :lua require('Comment.api').gcc('n')<CR>
+vmap <leader>c<leader> :lua require('Comment.api').gcc('v')<CR>
 
 
 " use s to surround
@@ -91,13 +88,13 @@ Plug 'vim-python/python-syntax'
 
 " git support
 Plug 'tpope/vim-fugitive'
-map <leader>ga :Git add %<CR> 
-map <leader>gA :Git add --patch %<CR> 
-map <leader>gc :Git commit<CR> 
-map <leader>gC :Git commit --amend<CR> 
-map <leader>gs :G<CR> 
-map <leader>gS :Git status<CR> 
-map <leader>gp :Git push<CR> 
+map <leader>ga :Git add %<CR>
+map <leader>gA :Git add --patch %<CR>
+map <leader>gc :Git commit<CR>
+map <leader>gC :Git commit --amend<CR>
+map <leader>gs :G<CR>
+map <leader>gS :Git status<CR>
+map <leader>gp :Git push<CR>
 map <leader>gd :vert Gdiffsplit<CR>
 map <leader>gD :Gvdiffsplit!<CR>
 map <leader>get :diffget<CR>
@@ -122,7 +119,7 @@ Plug 'Yggdroot/indentLine'
 " flex syntax
 Plug 'justinmk/vim-syntax-extra'
 
-"rust shit 
+"rust shit
 Plug 'simrat39/rust-tools.nvim'
 
 
@@ -131,6 +128,8 @@ Plug 'github/copilot.vim'
 
 Plug 'tami5/lspsaga.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
+
+
 call plug#end()
 
 colorscheme darcula
@@ -159,5 +158,11 @@ require 'colorizer'.setup {
     mode = 'foreground';
   }
 }
+require('Comment').setup({
+mapping = {
+  basic = true,
+  extra = false
+  }
+})
 EOF
 lua require('rust-tools').setup({})
