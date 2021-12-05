@@ -56,8 +56,9 @@ Plug 'windwp/nvim-autopairs'
 
 " comments things
 Plug 'numToStr/Comment.nvim'
-nmap <leader>c<leader> :lua require('Comment.api').gcc('n')<CR>
-vmap <leader>c<leader> :lua require('Comment.api').gcc('v')<CR>
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+nmap <leader>c<leader> gcc
+vmap <leader>c<leader> gcc
 
 
 " use s to surround
@@ -154,6 +155,10 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  context_commentstring = {
+    enable = true,
+	enable_autocmd = false
+  }
 }
 require 'colorizer'.setup {
   'css';
@@ -162,12 +167,23 @@ require 'colorizer'.setup {
     mode = 'foreground';
   }
 }
-require('Comment').setup({
-mapping = {
-  basic = true,
-  extra = false
-  }
-})
+require('Comment').setup {
+  pre_hook = function(ctx)
+    local U = require 'Comment.utils'
+
+    local location = nil
+    if ctx.ctype == U.ctype.block then
+      location = require('ts_context_commentstring.utils').get_cursor_location()
+    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+      location = require('ts_context_commentstring.utils').get_visual_start_location()
+    end
+
+    return require('ts_context_commentstring.internal').calculate_commentstring {
+      key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
+      location = location,
+    }
+  end,
+}
 require('nvim-ts-autotag').setup()
 EOF
 lua require('rust-tools').setup({})
