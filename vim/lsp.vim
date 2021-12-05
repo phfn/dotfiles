@@ -3,7 +3,14 @@ require'cmp'.setup { sources = { { name = 'path' } } }
 require('nvim-autopairs').setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.rust_analyzer.setup{}
-require'lspconfig'.pylsp.setup{}
+ -- remember to 'pip install python-lsp-black'
+require'lspconfig'.pylsp.setup{ settings = { pylsp = { plugins = {
+	pycodestyle = { enabled = false },
+	pylint = {
+		enabled = true,
+		args = { "--max-line-length=88", }
+	},
+}}}}
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.cssls.setup{}
 --require'lspconfig'.java_language_server.setup{cmd={"/usr/share/java/java-language-server/lang_server_linux.sh"} }
