@@ -129,6 +129,7 @@ Plug 'github/copilot.vim'
 Plug 'tami5/lspsaga.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
 
+Plug 'windwp/nvim-ts-autotag'
 
 call plug#end()
 
@@ -164,5 +165,6 @@ mapping = {
   extra = false
   }
 })
+require('nvim-ts-autotag').setup()
 EOF
 lua require('rust-tools').setup({})
