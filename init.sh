@@ -9,3 +9,4 @@ cp ~/dotfiles/vim/coc-settings.json ~/.vim/coc-settings.json
 ~/dotfiles/git/init.sh
 ./keyboard/init.sh
 ./requirements/init.sh
+./.config/init.py
