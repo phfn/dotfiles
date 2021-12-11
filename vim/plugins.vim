@@ -15,6 +15,8 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lua'
 
+Plug 'hrsh7th/cmp-copilot'
+
 " Enable Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -35,6 +37,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 "icons in filetree
  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
  Plug 'ryanoasis/vim-devicons'
+ Plug 'kyazdani42/nvim-web-devicons'
 
 " better search
 Plug 'nvim-telescope/telescope.nvim'
@@ -90,6 +93,8 @@ Plug 'vim-python/python-syntax'
 " git support
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'kdheepak/lazygit.nvim'
+
 map <leader>ga :Git add %<CR>
 map <leader>gA :Git add --patch %<CR>
 map <leader>gc :Git commit<CR>
@@ -103,7 +108,11 @@ map <leader>get :diffget<CR>
 map <leader>gut :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>
-au FileType set spell<CR>
+map <leader>gg :LazyGit<CR>
+au FileType fugitive set spell<CR>
+
+Plug 'sindrets/diffview.nvim'
+map <leader>gvd :DiffviewOpen<CR>
 
 " vim in firefox
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -188,3 +197,4 @@ require('Comment').setup {
 require('nvim-ts-autotag').setup()
 EOF
 lua require('rust-tools').setup({})
+source ~/dotfiles/vim/diff.vim
