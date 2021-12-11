@@ -22,6 +22,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 "let it look like intellij
 Plug 'doums/darcula'
+Plug 'chiendo97/intellij.vim'
 
 " Another colorscheme
 Plug 'morhetz/gruvbox'
@@ -116,7 +117,6 @@ map <leader>gvd :DiffviewOpen<CR>
 
 " vim in firefox
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-source ~/dotfiles/vim/firenvim_settings.vim
 
 " better js syntac highlighting
 Plug 'yuezk/vim-js'
@@ -198,3 +198,4 @@ require('nvim-ts-autotag').setup()
 EOF
 lua require('rust-tools').setup({})
 source ~/dotfiles/vim/diff.vim
+source ~/dotfiles/vim/firenvim_settings.vim
