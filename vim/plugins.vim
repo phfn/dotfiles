@@ -71,9 +71,6 @@ Plug 'tpope/vim-surround'
 "intention with i eg dai deletes a funktion in python
 Plug 'michaeljsmith/vim-indent-object'
 
-"venv shit | use :VirtualEnvActivate venv
-Plug 'jmcantrell/vim-virtualenv'
-
 "autosafe with :AutoSaveToggle
 Plug '907th/vim-auto-save'
 let g:auto_save = 0
