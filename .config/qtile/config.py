@@ -33,7 +33,6 @@ from libqtile.config import Drag, Key, ScratchPad, Screen, Group, Drag, Click, R
 from libqtile.lazy import lazy
 from libqtile import layout, bar, widget, hook
 from libqtile.core.manager import Qtile
-os.system("export PATH=/home/phfn/.local/bin:$PATH")
 
 # mod4 or mod = super key
 super = "mod4"
@@ -42,7 +41,6 @@ ctrl = "control"
 shift = "shift"
 
 home = os.path.expanduser('~')
-
 
 @lazy.function
 def window_to_prev_group(qtile):
@@ -64,7 +62,7 @@ def start_xdg():
             "pamac-tray.desktop",
             "pamac-tray-budgie.desktop",
             "xfce4-notes-autostart.desktop",
-            "autorandr.desktop",
+            # "autorandr.desktop",
             ]
     autostart_path = "/etc/xdg/autostart"
     for file in os.listdir(autostart_path):
@@ -73,8 +71,8 @@ def start_xdg():
         os.system(f"dex {autostart_path}/{file}")
 
 
-@hook.subscribe.startup_complete
-def set_wallpaper():
+
+def get_random_wallpaper():
     # Pick first location and the first files in there
     backgroud_locations = [
         "/home/backgrounds/",
@@ -95,9 +93,7 @@ def set_wallpaper():
         except FileNotFoundError:
             pass
     shuffle(wallpapers)
-    subprocess.call(
-            ["feh", "--bg-fill", wallpapers[0], "--bg-fill", wallpapers[1]]
-    )
+    return wallpapers[0]
 
 
 @hook.subscribe.startup
@@ -498,9 +494,8 @@ screens = [
                         size=26,
                         opacity=0.8
                     ),
-                # wallpaper=wallpapers[0],
-                # wallpaper="/usr/share/backgrounds/manjaro-wallpapers-18.0/manjaro_maia_logo.jpg",
-                # wallpaper_mode="fill"
+                wallpaper="/usr/share/backgrounds/illyria-default-lockscreen.jpg",
+                wallpaper_mode="fill"
                 ),
             Screen(
                 top=bar.Bar(
@@ -508,12 +503,18 @@ screens = [
                         size=26,
                         opacity=0.8
                     ),
-                # wallpaper="/usr/share/backgrounds/manjaro-wallpapers-18.0/play.jpg",
-                # wallpaper=wallpapers[1] if len(wallpapers) > 1 else wallpapers[0],
-                # wallpaper_mode="fill"
+                wallpaper="/usr/share/backgrounds/manjaro-wallpapers-18.0/manjaro_maia_logo.jpg",
+                wallpaper_mode="fill"
 
                 )
             ]
+
+
+@hook.subscribe.startup_complete
+def repaint_screens(*args):
+    subprocess.call(
+            ["feh", "--bg-fill", screens[0].wallpaper, "--bg-fill", screens[1].wallpaper]
+    )
 
 
 # MOUSE CONFIGURATION
