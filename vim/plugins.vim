@@ -15,7 +15,6 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lua'
 
-Plug 'hrsh7th/cmp-copilot'
 
 " Enable Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -132,7 +131,6 @@ Plug 'simrat39/rust-tools.nvim'
 
 
 Plug 'mfussenegger/nvim-jdtls'
-Plug 'github/copilot.vim'
 
 Plug 'tami5/lspsaga.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
