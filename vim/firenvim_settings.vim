@@ -17,4 +17,9 @@ if exists('g:started_by_firenvim')
   au BufEnter colab.research.google.com_*.txt set filetype=python
   au BufEnter localhost_*-ipynb*.txt set filetype=python
   colorscheme intellij
+  " deactivate statusline
+  set noshowmode
+  set noruler
+  set laststatus=0
+  set noshowcmd
 endif
