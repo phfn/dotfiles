@@ -436,6 +436,16 @@ def init_widgets_list():
                widget.WindowName(
                    **widget_defaults
                         ),
+               widget.Clock(**widget_defaults | dict(
+                        # format="%Y-%m-%d"
+                        format="%d.%m.%Y"
+                        )),
+               widget.Clock(**widget_defaults | dict(
+                        format="%H:%M"
+                        )),
+               widget.Sep(),
+               widget.Memory(format = "RAM: {MemPercent: .0f}%"),
+               widget.MemoryGraph(),
                widget.Sep(),
                widget.Battery(
                        format="{hour:d}:{min:02d}  {percent:2.0%}"
@@ -451,17 +461,13 @@ def init_widgets_list():
                #          fontsize=16
                #          ),
                widget.Volume(**widget_defaults | dict(
+                        emoji = True,
                         step=5
                    )),
-               widget.Sep(),
-               widget.Clock(**widget_defaults | dict(
-                        format="%H:%M"
-                        )),
-               widget.Sep(),
-               widget.Clock(**widget_defaults | dict(
-                        # format="%Y-%m-%d"
-                        format="%d.%m.%Y"
-                        )),
+               widget.Volume(**widget_defaults | dict(
+                        emoji = False,
+                        step=5
+                   )),
               ]
     return widgets_list
 
