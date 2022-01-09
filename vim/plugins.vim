@@ -28,8 +28,10 @@ Plug 'morhetz/gruvbox'
 
 "better filetree
 Plug 'preservim/nerdtree'
-map <leader>t :NERDTreeToggle<CR>
-let g:NERDTreeQuitOnOpen = 1
+map <leader>t :NvimTreeToggle<CR>
+" map <leader>t :NERDTreeToggle<CR>
+
+Plug 'kyazdani42/nvim-tree.lua'
 
 "git in filetree
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -61,6 +63,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'numToStr/Comment.nvim'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 nmap <leader>c<leader> gcc
+" nmap <C-\> gccj
 vmap <leader>c<leader> gcc
 
 
@@ -106,7 +109,7 @@ map <leader>gut :diffget<CR>
 map <leader>gf :diffget //2<CR>
 map <leader>gj :diffget //3<CR>
 map <leader>gg :LazyGit<CR>
-au FileType fugitive set spell<CR>
+au FileType fugitive set spell
 
 Plug 'sindrets/diffview.nvim'
 map <leader>gvd :DiffviewOpen<CR>
@@ -142,9 +145,9 @@ call plug#end()
 colorscheme darcula
 
 " transparant backgroud
-hi Normal guibg=NONE ctermbg=NONE
-hi LineNr guibg=NONE ctermbg=NONE
-hi SignColumn guibg=NONE ctermbg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
+" hi LineNr guibg=NONE ctermbg=NONE
+" hi SignColumn guibg=NONE ctermbg=NONE
 set signcolumn=auto:1-2
 
 lua <<EOF
@@ -190,7 +193,42 @@ require('Comment').setup {
   end,
 }
 require('nvim-ts-autotag').setup()
+
+
+require'nvim-tree'.setup {
+	auto_close = true,
+	update_cwd = false,
+	-- TODO diagnostics dont work currently
+	-- diagnostics = {
+		-- enable = true,
+		-- icons = {
+			-- hint = "",
+			-- info = "",
+			-- warning = "",
+			-- error = ""
+		-- }
+	-- },
+	update_focused_file = {
+		enable      = true,
+		update_cwd  = true,
+		ignore_list = {}
+	},
+	view = {
+		-- TODO edit mappings
+		mappings = {
+			custom_only = false,
+			list = {}
+		}
+	},
+	filters = {
+		dotfiles = true,
+		custom = {}
+	}
+}
 EOF
+let g:nvim_tree_quit_on_open = 1
 lua require('rust-tools').setup({})
+lua require('lualine').setup()
 source ~/dotfiles/vim/diff.vim
 source ~/dotfiles/vim/firenvim_settings.vim
+
