@@ -1,146 +1,269 @@
-""install Plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-  \| endif
+" autoload config changes on write
+augroup packer_user_config
+  autocmd!
+  autocmd BufWritePost plugins.vim source $MYVIMRC | PackerCompile
+augroup end
 
-call plug#begin()
-" lsp
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-nvim-lua'
+lua <<EOF
+-- autoinstall packer
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+end
 
-
-" Enable Treesitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-"let it look like intellij
-Plug 'doums/darcula'
-Plug 'chiendo97/intellij.vim'
-
-" Another colorscheme
-Plug 'morhetz/gruvbox'
-
-"better filetree
-Plug 'preservim/nerdtree'
-map <leader>t :NvimTreeToggle<CR>
-" map <leader>t :NERDTreeToggle<CR>
-
-Plug 'kyazdani42/nvim-tree.lua'
-
-"git in filetree
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-"icons in filetree
- Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
- Plug 'ryanoasis/vim-devicons'
- Plug 'kyazdani42/nvim-web-devicons'
-
-" better search
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-lua/plenary.nvim'
-nnoremap <leader>f<leader> :Telescope git_files<CR>
-nnoremap <leader>fv :Telescope git_files cwd=~/dotfiles/<CR>
-nnoremap <leader>fb :Telescope buffers<CR><ESC>k
-nnoremap <leader>F :Telescope find_files<CR>
-nnoremap <leader>fr :Telescope oldfiles<CR>
-nnoremap <leader>fg :Telescope live_grep<CR>
-nnoremap <leader>ft :Telescope builtin<CR>
-nnoremap <leader>fh :Telescope help_tags<CR>
-nnoremap <leader>fs <cmd>Telescope grep_string<CR><ESC>
-nnoremap z= <cmd>Telescope spell_suggest<CR><ESC>
-nnoremap "" <cmd>Telescope registers<CR><ESC>
-
-" autoclose ()[]{}
-Plug 'windwp/nvim-autopairs'
-
-" comments things
-Plug 'numToStr/Comment.nvim'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-nmap <leader>c<leader> gcc
-" nmap <C-\> gccj
-vmap <leader>c<leader> gcc
+return require('packer').startup(function()
+-- lsp
+	use {'neovim/nvim-lspconfig'}
+	use {'hrsh7th/cmp-nvim-lsp'}
+	use {'hrsh7th/cmp-buffer'}
+	use {'hrsh7th/nvim-cmp'}
+	use {'hrsh7th/vim-vsnip'}
+	use {'hrsh7th/cmp-vsnip'}
+	use {'hrsh7th/cmp-path'}
+	use {'hrsh7th/cmp-cmdline'}
+	use {'hrsh7th/cmp-nvim-lua'}
 
 
-" use s to surround
-Plug 'tpope/vim-surround'
+-- Enable Treesitter
+	use { 'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate',
+		config = function() require'nvim-treesitter.configs'.setup {
+			ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+			-- ignore_install = { "javascript" }, -- List of parsers to ignore installing
+			highlight = {
+				enable = true,              -- false will disable the whole extension
+			-- disable = { "c", "rust" },  -- list of language that will be disabled
+			-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+			-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+			-- Using this option may slow down your editor, and you may see some duplicate highlights.
+			-- Instead of true it can also be a list of languages
+			additional_vim_regex_highlighting = false,
+			},
+			context_commentstring = {
+				enable = true,
+				enable_autocmd = false
+			}
+		} end
+	}
 
-"intention with i eg dai deletes a funktion in python
-Plug 'michaeljsmith/vim-indent-object'
+-- let it look like intellij
+	use {'doums/darcula'}
+	use {'chiendo97/intellij.vim'}
 
-"autosafe with :AutoSaveToggle
-Plug '907th/vim-auto-save'
-let g:auto_save = 0
-au FileType python let b:auto_save = 1
-au FileType javascript let b:auto_save = 1
-au FileType rust let b:auto_save = 1
-au FileType markdown let b:auto_save = 1
+-- Another colorscheme
+	use {'morhetz/gruvbox'}
 
-" Nice airline
-Plug 'nvim-lualine/lualine.nvim'
+--better filetree
+	use {'kyazdani42/nvim-tree.lua',
+	config = function()
+		vim.cmd([[
+			let g:nvim_tree_quit_on_open = 1
+			nnoremap <leader>t<leader> :NvimTreeToggle<CR>
+		]])
+		require'nvim-tree'.setup {
+			auto_close = true,
+			update_cwd = false,
+			-- TODO diagnostics dont work currently
+			-- diagnostics = {
+				-- enable = true,
+				-- icons = {
+					-- hint = "",
+					-- info = "",
+					-- warning = "",
+					-- error = ""
+					-- }
+					-- },
+					update_focused_file = {
+					enable      = true,
+					update_cwd  = true,
+					ignore_list = {}
+					},
+				view = {
+					-- TODO edit mappings
+					mappings = {
+						custom_only = false,
+						list = {}
+						}
+					},
+				filters = {
+					dotfiles = true,
+					custom = {}
+				}
+			}
+			vim.cmd([[
+			]])
+		end
+	}
 
-" better markings| mark with m[key] jump with '[key]
-Plug 'kshenoy/vim-signature'
+--git in filetree
+	use {'Xuyuanp/nerdtree-git-plugin'}
 
-" better syntax highlighting for python
-Plug 'vim-python/python-syntax'
+--icons in filetree
+	use {'tiagofumo/vim-nerdtree-syntax-highlight'}
+	use {'ryanoasis/vim-devicons'}
+	use {'kyazdani42/nvim-web-devicons'}
 
-" git support
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'kdheepak/lazygit.nvim'
+-- better search
+	--use {'nvim-lua/plenary.nvim'}
+	use {'nvim-telescope/telescope.nvim',
+		requires ={ 'nvim-lua/plenary.nvim'},
+		config = vim.cmd([[
+				nnoremap <leader>f<leader> :Telescope git_files<CR>
+				nnoremap <leader>fv :Telescope git_files cwd=~/dotfiles/<CR>
+				nnoremap <leader>fb :Telescope buffers<CR><ESC>k
+				nnoremap <leader>F :Telescope find_files<CR>
+				nnoremap <leader>fr :Telescope oldfiles<CR>
+				nnoremap <leader>fg :Telescope live_grep<CR>
+				nnoremap <leader>ft :Telescope builtin<CR>
+				nnoremap <leader>fh :Telescope help_tags<CR>
+				nnoremap <leader>fs <cmd>Telescope grep_string<CR><ESC>
+				nnoremap z= <cmd>Telescope spell_suggest<CR><ESC>
+				nnoremap "" <cmd>Telescope registers<CR><ESC>
+				]])
+	}
 
-map <leader>ga :Git add %<CR>
-map <leader>gA :Git add --patch %<CR>
-map <leader>gc :Git commit<CR>
-map <leader>gC :Git commit --amend<CR>
-map <leader>gs :G<CR>
-map <leader>gS :Git status<CR>
-map <leader>gp :Git push<CR>
-map <leader>gd :vert Gdiffsplit<CR>
-map <leader>gD :Gvdiffsplit!<CR>
-map <leader>get :diffget<CR>
-map <leader>gut :diffget<CR>
-map <leader>gf :diffget //2<CR>
-map <leader>gj :diffget //3<CR>
-map <leader>gg :LazyGit<CR>
-au FileType fugitive set spell
+-- autoclose ()[]{}
+	use {'windwp/nvim-autopairs'}
 
-Plug 'sindrets/diffview.nvim'
-map <leader>gvd :DiffviewOpen<CR>
+-- comments things
+	use {'numToStr/Comment.nvim',
+		config = function() require('Comment').setup {
+			pre_hook = function(ctx)
+			local U = require 'Comment.utils'
 
-" vim in firefox
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+			local location = nil
+			if ctx.ctype == U.ctype.block then
+				location = require('ts_context_commentstring.utils').get_cursor_location()
+			elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+				location = require('ts_context_commentstring.utils').get_visual_start_location()
+			end
 
-" better js syntac highlighting
-Plug 'yuezk/vim-js'
+			return require('ts_context_commentstring.internal').calculate_commentstring {
+				key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
+				location = location,
+				}
+			end,
+		}end
+	}
 
-" react highlighting
-Plug 'MaxMEllon/vim-jsx-pretty'
-
-" intention lines
-Plug 'Yggdroot/indentLine'
-
-" flex syntax
-Plug 'justinmk/vim-syntax-extra'
-
-"rust shit
-Plug 'simrat39/rust-tools.nvim'
+	use {'JoosepAlviste/nvim-ts-context-commentstring',
+		config = vim.cmd([[
+			nmap <leader>c<leader> gcc
+			vmap <leader>c<leader> gcc
+		]])
+	}
 
 
-Plug 'mfussenegger/nvim-jdtls'
+-- use s to surround
+	use {'tpope/vim-surround'}
 
-Plug 'tami5/lspsaga.nvim'
-Plug 'norcalli/nvim-colorizer.lua'
+--intention with i eg dai deletes a funktion in python
+	use {'michaeljsmith/vim-indent-object'}
 
-Plug 'windwp/nvim-ts-autotag'
+--autosafe with :AutoSaveToggle
+	use {'907th/vim-auto-save',
+		config = vim.cmd([[
+			let g:auto_save = 0
+			au FileType python let b:auto_save = 1
+			au FileType javascript let b:auto_save = 1
+			au FileType rust let b:auto_save = 1
+			au FileType markdown let b:auto_save = 1
+		]])
+	}
 
-call plug#end()
+-- Nice airline
+	use {'nvim-lualine/lualine.nvim',
+		config = function() require('lualine').setup() end
+	}
+
+-- better markings| mark with m[key] jump with '[key]
+	use {'kshenoy/vim-signature'}
+
+-- better syntax highlighting for python
+	use {'vim-python/python-syntax'}
+
+-- git support
+	use {'tpope/vim-fugitive',
+		config = vim.cmd([[
+			map <leader>ga :Git add %<CR>
+			map <leader>gA :Git add --patch %<CR>
+			map <leader>gc :Git commit<CR>
+			map <leader>gC :Git commit --amend<CR>
+			map <leader>gs :G<CR>
+			map <leader>gS :Git status<CR>
+			map <leader>gp :Git push<CR>
+			map <leader>gd :vert Gdiffsplit<CR>
+			map <leader>gD :Gvdiffsplit!<CR>
+			map <leader>get :diffget<CR>
+			map <leader>gut :diffget<CR>
+			map <leader>gf :diffget //2<CR>
+			map <leader>gj :diffget //3<CR>
+			au FileType fugitive set spell
+		]])
+	}
+	use {'airblade/vim-gitgutter'}
+	use {'kdheepak/lazygit.nvim',
+		config = vim.cmd([[
+			map <leader>gg :LazyGit<CR>
+		]])
+	}
+
+	use {'sindrets/diffview.nvim',
+		config = vim.cmd([[
+			source ~/dotfiles/vim/diff.vim
+		]])
+	}
+
+-- vim in firefox
+	use { 'glacambre/firenvim',
+		run = function() vim.fn['firenvim#install'](0) end,
+		config = vim.cmd([[source ~/dotfiles/vim/firenvim_settings.vim ]])
+	}
+
+-- better js syntac highlighting
+	use {'yuezk/vim-js'}
+
+-- react highlighting
+	use {'MaxMEllon/vim-jsx-pretty'}
+
+-- intention lines
+	use {'Yggdroot/indentLine'}
+
+-- flex syntax
+	use {'justinmk/vim-syntax-extra'}
+
+--rust shit
+	use {'simrat39/rust-tools.nvim',
+		config = function() require('rust-tools').setup({}) end
+	}
+
+
+	use {'mfussenegger/nvim-jdtls'}
+
+	use {'tami5/lspsaga.nvim'}
+	use {'norcalli/nvim-colorizer.lua',
+		config = function() require 'colorizer'.setup {
+			'css';
+			'javascript';
+			html = {
+				mode = 'foreground';
+				}
+			} end
+	}
+
+	use {'windwp/nvim-ts-autotag',
+		config = function() require('nvim-ts-autotag').setup() end
+	}
+
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+end)
+
+EOF
 
 colorscheme darcula
 
@@ -149,86 +272,3 @@ colorscheme darcula
 " hi LineNr guibg=NONE ctermbg=NONE
 " hi SignColumn guibg=NONE ctermbg=NONE
 set signcolumn=auto:1-2
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    -- disable = { "c", "rust" },  -- list of language that will be disabled
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-  context_commentstring = {
-    enable = true,
-	enable_autocmd = false
-  }
-}
-require 'colorizer'.setup {
-  'css';
-  'javascript';
-  html = {
-    mode = 'foreground';
-  }
-}
-require('Comment').setup {
-  pre_hook = function(ctx)
-    local U = require 'Comment.utils'
-
-    local location = nil
-    if ctx.ctype == U.ctype.block then
-      location = require('ts_context_commentstring.utils').get_cursor_location()
-    elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-      location = require('ts_context_commentstring.utils').get_visual_start_location()
-    end
-
-    return require('ts_context_commentstring.internal').calculate_commentstring {
-      key = ctx.ctype == U.ctype.line and '__default' or '__multiline',
-      location = location,
-    }
-  end,
-}
-require('nvim-ts-autotag').setup()
-
-
-require'nvim-tree'.setup {
-	auto_close = true,
-	update_cwd = false,
-	-- TODO diagnostics dont work currently
-	-- diagnostics = {
-		-- enable = true,
-		-- icons = {
-			-- hint = "",
-			-- info = "",
-			-- warning = "",
-			-- error = ""
-		-- }
-	-- },
-	update_focused_file = {
-		enable      = true,
-		update_cwd  = true,
-		ignore_list = {}
-	},
-	view = {
-		-- TODO edit mappings
-		mappings = {
-			custom_only = false,
-			list = {}
-		}
-	},
-	filters = {
-		dotfiles = true,
-		custom = {}
-	}
-}
-EOF
-let g:nvim_tree_quit_on_open = 1
-lua require('rust-tools').setup({})
-lua require('lualine').setup()
-source ~/dotfiles/vim/diff.vim
-source ~/dotfiles/vim/firenvim_settings.vim
-
