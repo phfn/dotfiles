@@ -1,3 +1,4 @@
+nnoremap <leader>gvd :DiffviewOpen<cr><c-w>k
 lua << EOF
 local cb = require'diffview.config'.diffview_callback
 require'diffview'.setup {
