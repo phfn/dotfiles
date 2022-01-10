@@ -13,21 +13,11 @@ require'lspconfig'.pylsp.setup{ settings = { pylsp = { plugins = {
 	},
 }}}}
 require'lspconfig'.clangd.setup{}
+require'lspconfig'.cmake.setup{}
 require'lspconfig'.cssls.setup{}
 --require'lspconfig'.java_language_server.setup{cmd={"/usr/share/java/java-language-server/lang_server_linux.sh"} }
 require'lspconfig'.java_language_server.setup{cmd={"java-language-server"} }
 
-lspsaga = require 'lspsaga'.setup {
-    code_action_keys = {
-        quit = "<ESC>"
-    },
-    finder_action_keys = { 
-        quit = "<ESC>"
-    },
-    -- rename_action_keys = { 
-        -- quit = "<ESC>"
-    -- }
-}
 EOF
 lua << EOF
 local nvim_lsp = require('lspconfig')

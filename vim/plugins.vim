@@ -243,7 +243,19 @@ return require('packer').startup(function()
 
 	use {'mfussenegger/nvim-jdtls'}
 
-	use {'tami5/lspsaga.nvim'}
+	use {'tami5/lspsaga.nvim', 
+		config = function() require'lspsaga'.setup {
+			code_action_keys = {
+				quit = "<ESC>"
+			},
+			finder_action_keys = { 
+				quit = "<ESC>"
+			},
+			-- rename_action_keys = { 
+				-- quit = "<ESC>"
+				-- }
+		} end
+	}
 	use {'norcalli/nvim-colorizer.lua',
 		config = function() require 'colorizer'.setup {
 			'css';
