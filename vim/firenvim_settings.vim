@@ -10,16 +10,22 @@ let g:firenvim_config = {
 		\ 'http://localhost:8888': { 'takeover': "always", 'priority': 1 },
 	\ }
 \ }
+function! SetUpFirenvim()
+	" colorscheme intellij
+	map <Esc> :q<CR>
+	set noshowmode
+	set noruler
+	set laststatus=0
+	set noshowcmd
+	set signcolumn=no
+	set nonumber
+	set norelativenumber
+
+endfunction
 if exists('g:started_by_firenvim')
-  au TextChanged * ++nested write
-  au TextChangedI * ++nested write
-  map <Esc> :q<CR>
-  au BufEnter colab.research.google.com_*.txt set filetype=python
-  au BufEnter localhost_*-ipynb*.txt set filetype=python
-  colorscheme intellij
-  " deactivate statusline
-  set noshowmode
-  set noruler
-  set laststatus=0
-  set noshowcmd
+	au TextChanged * ++nested write
+	au TextChangedI * ++nested write
+	au BufEnter colab.research.google.com_*.txt set filetype=python
+	au BufEnter localhost_*-ipynb*.txt set filetype=python
+	au BufEnter * call SetUpFirenvim()
 endif

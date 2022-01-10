@@ -218,7 +218,9 @@ return require('packer').startup(function()
 -- vim in firefox
 	use { 'glacambre/firenvim',
 		run = function() vim.fn['firenvim#install'](0) end,
-		config = vim.cmd([[source ~/dotfiles/vim/firenvim_settings.vim ]])
+		config = vim.cmd([[
+			source ~/dotfiles/vim/firenvim_settings.vim
+		]])
 	}
 
 -- better js syntac highlighting
