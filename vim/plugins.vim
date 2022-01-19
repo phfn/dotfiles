@@ -14,7 +14,10 @@ end
 
 return require('packer').startup(function()
 -- lsp
-	use {'neovim/nvim-lspconfig'}
+	use {'neovim/nvim-lspconfig',
+		config = function() 
+			vim.cmd([[source ~/dotfiles/vim/lsp.lua]])
+		end }
 	use {'hrsh7th/cmp-nvim-lsp'}
 	use {'hrsh7th/cmp-buffer'}
 	use {'hrsh7th/nvim-cmp'}

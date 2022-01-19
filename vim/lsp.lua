@@ -1,4 +1,3 @@
-lua << EOF
 require'cmp'.setup { sources = { { name = 'path' } } }
 require('nvim-autopairs').setup{}
 require'lspconfig'.tsserver.setup{}
@@ -18,10 +17,7 @@ require'lspconfig'.cssls.setup{}
 --require'lspconfig'.java_language_server.setup{cmd={"/usr/share/java/java-language-server/lang_server_linux.sh"} }
 require'lspconfig'.java_language_server.setup{cmd={"java-language-server"} }
 
-EOF
-lua << EOF
 local nvim_lsp = require('lspconfig')
-
 
 
 
@@ -34,6 +30,10 @@ cmp.setup({
 	  ['<C-Space>'] = cmp.mapping.complete(),
 	  ['<C-e>'] = cmp.mapping.close(),
 	  ['<CR>'] = cmp.mapping.confirm({ select = true }),
+	  ['<C-q>'] = cmp.mapping.confirm {
+		  behavior = cmp.ConfirmBehavior.Insert,
+		  select = true,
+		  },
 	},
 	sources = cmp.config.sources(
 		{ { name = 'nvim_lsp' }, },
@@ -100,4 +100,3 @@ vim.diagnostic.config({
 	float = {source = "always"},
 	severity_sort = true
 	})
-EOF
