@@ -96,11 +96,18 @@ def get_random_wallpaper():
     return wallpapers[0]
 
 
+@hook.subscribe.startup_once
+def start_autostart_once_script():
+    path = "/home/phfn/.config/autostart-once.sh"
+    if os.path.exists(path):
+        os.system(
+                os.path.expanduser(path)
+                + " > /home/phfn/.config/autostart-once.log")
+
 @hook.subscribe.startup
 def start_autostart_script():
     path = "/home/phfn/.config/autostart.sh"
     if os.path.exists(path):
-        subprocess.call([os.path.expanduser(path)])
         os.system(
                 os.path.expanduser(path)
                 + " > /home/phfn/.config/autostart.log")
