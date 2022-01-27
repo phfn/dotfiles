@@ -31,8 +31,11 @@ import subprocess
 from random import shuffle
 from libqtile.config import Drag, Key, ScratchPad, Screen, Group, Drag, Click, Rule, Match, EzKey, KeyChord
 from libqtile.lazy import lazy
-from libqtile import layout, bar, widget, hook
+from libqtile import layout, bar, widget, hook 
 from libqtile.core.manager import Qtile
+from libqtile.backend.base import Window
+from libqtile import qtile
+from libqtile.log_utils import logger
 
 # mod4 or mod = super key
 super = "mod4"
@@ -355,6 +358,19 @@ groups = [
         spawn=["keepassxc"]
     ),
         ]
+
+# @hook.subscribe.client_new
+def move_dialogs_to_current_group(win: Window):
+    if win.get_wm_type() == "dialog":
+        win.group.cmd_toscreen(toggle=False)
+        win.cmd_bring_to_front()
+
+@hook.subscribe.client_new
+def move_to_dialog(win: Window):
+    if win.get_wm_type() == "dialog":
+        win.togroup(qtile.current_group.name)
+        win.cmd_bring_to_front()
+
 
 for group in groups:
     keys.extend([
