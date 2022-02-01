@@ -128,9 +128,7 @@ return require('packer').startup(function()
 
 -- autoclose ()[]{}
 -- require('nvim-autopairs').setup{}
-	use {'windwp/nvim-autopairs',
-			config = require('nvim-autopairs').setup{}
-		}
+	use {'windwp/nvim-autopairs'}
 
 -- comments things
 	use {'numToStr/Comment.nvim',
