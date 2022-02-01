@@ -115,7 +115,6 @@ vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
 au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
 au BufEnter *.h set wrap
-set autochdir
 nnoremap <C-o> <C-o>zz
 " nnoremap <leader>lf mzggVG=`z
 "
