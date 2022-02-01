@@ -199,7 +199,9 @@ return require('packer').startup(function()
 			map <leader>gs :G<CR>
 			map <leader>gS :Git status<CR>
 			map <leader>gp :Git push<CR>
-			map <leader>gd :vert Gdiffsplit<CR>
+			map <leader>gdd :vert Gdiffsplit<CR>
+			map <leader>gd1 :vert Gdiffsplit HEAD~1<CR>
+			map <leader>gd :vert Gdiffsplit
 			map <leader>gD :Gvdiffsplit!<CR>
 			map <leader>get :diffget<CR>
 			map <leader>gut :diffget<CR>
