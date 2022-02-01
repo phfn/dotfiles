@@ -1,67 +1,4 @@
-require'cmp'.setup { sources = { { name = 'path' } } }
-require('nvim-autopairs').setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.rust_analyzer.setup{}
- -- remember to 'pip install python-lsp-black'
-require'lspconfig'.pylsp.setup{ settings = { pylsp = { plugins = {
-	pycodestyle = { enabled = false },
-	pyflakes = { enabled = false },
-	pylint = {
-		enabled = true,
-		args = { "--max-line-length=88", }
-	},
-}}}}
-require'lspconfig'.clangd.setup{}
-require'lspconfig'.cmake.setup{}
-require'lspconfig'.cssls.setup{}
---require'lspconfig'.java_language_server.setup{cmd={"/usr/share/java/java-language-server/lang_server_linux.sh"} }
-require'lspconfig'.java_language_server.setup{cmd={"java-language-server"} }
-
-local nvim_lsp = require('lspconfig')
-
-
-
--- Setup nvim-cmp.
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local cmp = require'cmp'
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
-cmp.setup({
-	mapping = {
-	  ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-	  ['<C-f>'] = cmp.mapping.scroll_docs(4),
-	  ['<C-Space>'] = cmp.mapping.complete(),
-	  ['<C-e>'] = cmp.mapping.close(),
-	  ['<CR>'] = cmp.mapping.confirm({ select = true }),
-	  ['<C-q>'] = cmp.mapping.confirm {
-		  behavior = cmp.ConfirmBehavior.Insert,
-		  select = true,
-		  },
-	},
-	sources = cmp.config.sources(
-		{ { name = 'nvim_lsp' }, },
-		{ { name = 'nvim_lua' }, },
-		{ { name = 'vsnip' }, },
-		{ { name = 'cmdline' }, },
-		{ { name = 'buffer' }, },
-		{ { name = 'path' }, }
-	),
-	completion = {
-		completeopt = 'menu,menuone,noinsert',
-	},
-	snippet = {
-		  expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-			-- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-			-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-			-- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-		  end,
-	},
-experimental = {
-	ghost_text = true
-	}
-
-})
-local on_attach = function(client, bufnr)
+local set_lsp_keybindings = function(client, bufnr)
 	-- Use an on_attach function to only map the following keys
 	-- after the language server attaches to the current buffer
 	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -95,6 +32,92 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
 	buf_set_keymap("n", "<ESC>", "<cmd>Lspsaga close_floaterm<cr>", opts)
 end
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+
+require'lspconfig'.tsserver.setup{
+	capabilities = capabilities,
+	on_attach = set_lsp_keybindings
+}
+
+require'lspconfig'.rust_analyzer.setup{
+	capabilities = capabilities,
+	on_attach = set_lsp_keybindings
+}
+
+ -- remember to 'pip install python-lsp-black'
+require'lspconfig'.pylsp.setup{ settings = { pylsp = { plugins = {
+	pycodestyle = { enabled = false },
+	pyflakes = { enabled = false },
+	pylint = {
+		enabled = true,
+		args = { "--max-line-length=88", }
+	},
+}}}}
+
+require'lspconfig'.clangd.setup{
+	capabilities = capabilities,
+	on_attach = set_lsp_keybindings
+}
+
+require'lspconfig'.cmake.setup{
+	capabilities = capabilities,
+	on_attach = set_lsp_keybindings
+}
+
+require'lspconfig'.cssls.setup{
+	capabilities = capabilities,
+	on_attach = set_lsp_keybindings
+}
+
+require'lspconfig'.java_language_server.setup{
+	capabilities = capabilities,
+	on_attach = set_lsp_keybindings,
+	cmd={"java-language-server"}
+}
+
+require'lspconfig'.kotlin_language_server.setup{
+	capabilities = capabilities,
+	on_attach = set_lsp_keybindings,
+	cmd={"kotlin-language-server"}
+}
+
+-- Setup nvim-cmp.
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require'cmp'
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+cmp.setup({
+	snippet = {
+		  expand = function(args)
+			require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+		  end,
+	},
+	mapping = {
+	  ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+	  ['<C-f>'] = cmp.mapping.scroll_docs(4),
+	  ['<C-Space>'] = cmp.mapping.complete(),
+	  ['<C-e>'] = cmp.mapping.close(),
+	  ['<CR>'] = cmp.mapping.confirm({ select = true }),
+	  ['<C-q>'] = cmp.mapping.confirm {
+		  behavior = cmp.ConfirmBehavior.Insert,
+		  select = true,
+		  },
+	},
+	sources = cmp.config.sources(
+		{ { name = 'nvim_lsp' }, },
+		{ { name = 'luasnip' }, },
+		{ { name = 'cmdline' }, },
+		{ { name = 'path' }, },
+		{ { name = 'buffer' }, }
+	),
+	completion = {
+		completeopt = 'menu,menuone,noinsert',
+	},
+	experimental = {
+		ghost_text = true
+	}
+})
 
 vim.diagnostic.config({
 	underline = {severity = {min=vim.diagnostic.severity.WARN} },
