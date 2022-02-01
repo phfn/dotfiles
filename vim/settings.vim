@@ -122,3 +122,5 @@ nnoremap <C-o> <C-o>zz
 if filereadable(expand('./.init.vim'))
 	au VimEnter * source ./.init.vim
 endif
+au BufEnter *.spl set filetype=spl
+au FileType spl set syntax=c
