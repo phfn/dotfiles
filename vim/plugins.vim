@@ -21,8 +21,8 @@ return require('packer').startup(function()
 	use {'hrsh7th/cmp-nvim-lsp'}
 	use {'hrsh7th/cmp-buffer'}
 	use {'hrsh7th/nvim-cmp'}
-	use {'hrsh7th/vim-vsnip'}
-	use {'hrsh7th/cmp-vsnip'}
+	use {'L3MON4D3/LuaSnip'}
+	use {'saadparwaiz1/cmp_luasnip'}
 	use {'hrsh7th/cmp-path'}
 	use {'hrsh7th/cmp-cmdline'}
 	use {'hrsh7th/cmp-nvim-lua'}
@@ -127,7 +127,10 @@ return require('packer').startup(function()
 	}
 
 -- autoclose ()[]{}
-	use {'windwp/nvim-autopairs'}
+-- require('nvim-autopairs').setup{}
+	use {'windwp/nvim-autopairs',
+			config = require('nvim-autopairs').setup{}
+		}
 
 -- comments things
 	use {'numToStr/Comment.nvim',
