@@ -39,7 +39,7 @@ return require('packer').startup(function()
 	use { 'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate',
 		config = function() require'nvim-treesitter.configs'.setup {
-			ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+			ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 			-- ignore_install = { "javascript" }, -- List of parsers to ignore installing
 			highlight = {
 				enable = true,              -- false will disable the whole extension
@@ -72,7 +72,6 @@ return require('packer').startup(function()
 			nnoremap <leader>t<leader> :NvimTreeToggle<CR>
 		]])
 		require'nvim-tree'.setup {
-			auto_close = true,
 			update_cwd = false,
 			-- TODO diagnostics dont work currently
 			-- diagnostics = {
@@ -227,9 +226,9 @@ return require('packer').startup(function()
 	}
 
 	use {'sindrets/diffview.nvim',
-		config = vim.cmd([[
-			source ~/dotfiles/vim/diff.vim
-		]])
+		 config = vim.cmd([[
+			" source ~/dotfiles/vim/diff.vim
+		 ]])
 	}
 
 -- vim in firefox
