@@ -94,7 +94,7 @@ cmp.setup({
 			require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
 		  end,
 	},
-	mapping = {
+	mapping = cmp.mapping.preset.insert({
 	  ['<C-d>'] = cmp.mapping.scroll_docs(-4),
 	  ['<C-f>'] = cmp.mapping.scroll_docs(4),
 	  ['<C-Space>'] = cmp.mapping.complete(),
@@ -118,8 +118,8 @@ cmp.setup({
 		  else
 			  fallback()
 		  end
-	  end, {"i","s","c",}),
-	},
+	  end, {"i","s",}),
+	}),
 	sources = cmp.config.sources(
 		{ { name = 'nvim_lsp' }, },
 		{ { name = 'luasnip' }, },
@@ -129,6 +129,9 @@ cmp.setup({
 	),
 	completion = {
 		completeopt = 'menu,menuone,noinsert',
+	},
+	view = {
+		entries = 'native'
 	},
 	experimental = {
 		ghost_text = true
