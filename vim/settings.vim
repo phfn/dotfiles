@@ -52,9 +52,9 @@ let g:python_highlight_all = 1
 " enable cool coulours
 set termguicolors
 
-map <leader>so :w <bar> :source $MYVIMRC<CR>
-map <Tab> :tabnext<CR>
-map <leader><Tab> :tabnew<CR>
+nnoremap <leader>so :w <bar> :source $MYVIMRC<CR>
+nnoremap <Tab> :tabnext<CR>
+nnoremap <leader><Tab> :tabnew<CR>
 
 map <leader>q <C-W>q
 
