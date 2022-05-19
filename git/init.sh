@@ -1,5 +1,5 @@
 #gitignore
-if [[ -f ~/.gitconfig ]];then
+if [[ -f ~/.gitignore ]];then
 	echo "do not connect .gitignore, becouse already exist"
 	echo "ln -s /home/phfn/dotfiles/git/.gitignore ~/.gitignore"
 else
