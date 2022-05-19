@@ -57,11 +57,9 @@ return require('packer').startup(function()
 		} end
 	}
 
--- let it look like intellij
+-- colorschemes
 	use {'doums/darcula'}
-	use {'chiendo97/intellij.vim'}
-
--- Another colorscheme
+	use 'shaunsingh/solarized.nvim'
 	use {'morhetz/gruvbox'}
 
 --better filetree
