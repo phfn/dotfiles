@@ -20,6 +20,7 @@ function! SetUpFirenvim()
 	set signcolumn=no
 	set nonumber
 	set norelativenumber
+	lua vim.diagnostic.config({ underline = false, virtual_text = false })
 
 endfunction
 if exists('g:started_by_firenvim')
