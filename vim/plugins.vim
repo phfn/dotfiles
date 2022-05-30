@@ -131,6 +131,8 @@ return require('packer').startup(function()
 				nnoremap <leader>ft :Telescope builtin<CR>
 				nnoremap <leader>fh :Telescope help_tags<CR>
 				nnoremap <leader>fs <cmd>Telescope grep_string<CR><ESC>
+				nnoremap <leader>ff :Telescope lsp_document_symbols<CR>
+				nnoremap <leader>fF :Telescope lsp_workspace_symbols<CR>
 				nnoremap z= <cmd>Telescope spell_suggest<CR><ESC>
 				nnoremap "" <cmd>Telescope registers<CR><ESC>
 				]])
