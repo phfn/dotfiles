@@ -58,9 +58,15 @@ return require('packer').startup(function()
 	}
 
 -- colorschemes
-	use {'doums/darcula'}
-	use 'shaunsingh/solarized.nvim'
-	use {'morhetz/gruvbox'}
+	use {'doums/darcula',
+		config = vim.cmd([[ colorscheme darcula]])
+	}
+	use {'shaunsingh/solarized.nvim',
+		config = vim.cmd([[" colorscheme solarized]])
+	}
+	use {'morhetz/gruvbox', 
+		config = vim.cmd([[" colorscheme grubbox]])
+	} 
 
 --better filetree
 	use {'kyazdani42/nvim-tree.lua',
@@ -293,7 +299,6 @@ end)
 
 EOF
 
-colorscheme darcula
 
 " transparant backgroud
 " hi Normal guibg=NONE ctermbg=NONE
