@@ -22,6 +22,7 @@ alias g="git"
 alias pacman="sudo pacman"
 alias apt="sudo apt"
 alias snvim="sudo -E nvim"
+alias dd="sudo dd status=progress"
 
 mdview(){
 	if [ -n "$1" ]
@@ -37,3 +38,5 @@ ova2qcow2(){
 	qemu-img convert -O qcow2 filename-disk001.vmdk filename.qcow2
 }
 alias ll="ls -la"
+alias webview="w3m -dump"
+export PATH=$PATH:/home/phfn/.cargo/bin/
