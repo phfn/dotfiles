@@ -181,17 +181,6 @@ return require('packer').startup(function()
 --intention with i eg dai deletes a funktion in python
 	use {'michaeljsmith/vim-indent-object'}
 
---autosafe with :AutoSaveToggle
-	use {'907th/vim-auto-save',
-		config = vim.cmd([[
-			let g:auto_save = 0
-			au FileType python let b:auto_save = 1
-			au FileType javascript let b:auto_save = 1
-			au FileType rust let b:auto_save = 1
-			au FileType markdown let b:auto_save = 1
-		]])
-	}
-
 -- Nice airline
 	use {'nvim-lualine/lualine.nvim',
 		config = function() require('lualine').setup() end
@@ -213,6 +202,7 @@ return require('packer').startup(function()
 			map <leader>gs :G<CR>
 			map <leader>gS :Git status<CR>
 			map <leader>gp :Git push<CR>
+			map <leader>gP :Git push --force
 			map <leader>gdd :vert Gdiffsplit<CR>
 			map <leader>gd1 :vert Gdiffsplit HEAD~1<CR>
 			map <leader>gd :vert Gdiffsplit
