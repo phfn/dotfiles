@@ -22,6 +22,8 @@ alias g="git"
 alias pacman="sudo pacman"
 alias apt="sudo apt"
 alias snvim="sudo -E nvim"
+alias vi="nvim --noplugin"
+alias v="nvim --clean"
 alias dd="sudo dd status=progress"
 
 mdview(){
