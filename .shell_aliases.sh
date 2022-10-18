@@ -42,6 +42,6 @@ ova2qcow2(){
 	tar -xvf $filename.ova
 	qemu-img convert -O qcow2 filename-disk001.vmdk filename.qcow2
 }
-alias ll="ls -la"
+alias ll="ls -lah"
 alias webview="w3m -dump"
 export PATH=$PATH:/home/phfn/.cargo/bin/
