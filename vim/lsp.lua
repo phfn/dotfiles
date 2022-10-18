@@ -9,6 +9,7 @@ local set_lsp_keybindings = function(client, bufnr)
 
 	-- Mappings.
 	local opts = { noremap=true, silent=false }
+	print("lsp.lua")
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
@@ -34,7 +35,7 @@ local set_lsp_keybindings = function(client, bufnr)
 	buf_set_keymap("n", "<ESC>", "<cmd>Lspsaga close_floaterm<cr>", opts)
 end
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 
 require'lspconfig'.tsserver.setup{
