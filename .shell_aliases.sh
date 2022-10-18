@@ -26,6 +26,9 @@ alias vi="nvim --noplugin"
 alias v="nvim --clean"
 alias dd="sudo dd status=progress"
 
+open(){
+	xdg-open $1 >/dev/null 2>&1
+}
 mdview(){
 	if [ -n "$1" ]
 	then
