@@ -44,4 +44,10 @@ ova2qcow2(){
 }
 alias ll="ls -lah"
 alias webview="w3m -dump"
+logcat(){
+	adb logcat -d $1 | nvim -c 'set filetype=logcat'
+}
+android_screen(){
+	adb exec-out screenrecord --output-format=h264 - | ffplay -framerate 60 -probesize 32 -sync video  -
+}
 export PATH=$PATH:/home/phfn/.cargo/bin/
