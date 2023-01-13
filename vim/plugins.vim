@@ -17,7 +17,15 @@ return require('packer').startup(function()
 	use {'neovim/nvim-lspconfig',
 		config = function() 
 			vim.cmd([[source ~/dotfiles/vim/lsp.lua]])
-		end }
+			require("mason").setup()
+			require("fidget").setup()
+		end,
+		requires = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+			"j-hui/fidget.nvim",
+			},
+	}
 	use {'hrsh7th/cmp-nvim-lsp'}
 	use {'hrsh7th/cmp-buffer'}
 	use {'hrsh7th/nvim-cmp'}
@@ -138,14 +146,20 @@ return require('packer').startup(function()
 	}
 
 -- colorschemes
+	use {'chiendo97/intellij.vim',
+		config = vim.cmd([[" colorscheme intellij]])
+	}
 	use {'doums/darcula',
-		config = vim.cmd([[ colorscheme darcula]])
+		config = vim.cmd([[" colorscheme darcula]])
 	}
 	use {'shaunsingh/solarized.nvim',
 		config = vim.cmd([[" colorscheme solarized]])
 	}
-	use {'morhetz/gruvbox', 
-		config = vim.cmd([[" colorscheme grubbox]])
+	use {'ellisonleao/gruvbox.nvim', 
+		config = vim.cmd([[
+		set background=light
+		colorscheme gruvbox
+		]])
 	} 
 
 --better filetree
@@ -275,7 +289,7 @@ return require('packer').startup(function()
 -- git support
 	use {'tpope/vim-fugitive',
 		config = vim.cmd([[
-			map <leader>ga :Git add %<CR>
+			map <leader>ga :w<CR>:Git add %<CR>
 			map <leader>gA :Git add --patch %<CR>
 			map <leader>gc :Git commit<CR>
 			map <leader>gC :Git commit --amend<CR>
@@ -360,6 +374,20 @@ return require('packer').startup(function()
 
 	use {'windwp/nvim-ts-autotag',
 		config = function() require('nvim-ts-autotag').setup() end
+	}
+
+	use {'chrisbra/csv.vim'
+		--[[ config = function() require('nvim-ts-autotag').setup() end ]]
+	}
+
+	use {'gburca/vim-logcat'
+	}
+
+	use {'amrbashir/nvim-docs-view',
+		config = function() require("docs-view").setup {
+		  position = "right",
+		  width = 60
+		}end
 	}
 
   -- Automatically set up your configuration after cloning packer.nvim
