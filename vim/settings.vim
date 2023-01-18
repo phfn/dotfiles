@@ -57,6 +57,7 @@ nnoremap <Tab> :tabnext<CR>
 nnoremap <leader><Tab> :tabnew<CR>
 
 map <leader>q <C-W>q
+nnoremap <leader>Q :tabclose<CR>
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
