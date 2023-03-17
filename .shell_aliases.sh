@@ -47,7 +47,10 @@ alias webview="w3m -dump"
 logcat(){
 	adb logcat -d $1 | nvim -c 'set filetype=logcat'
 }
-android_screen(){
+android_screen_mirror(){
 	adb exec-out screenrecord --output-format=h264 - | ffplay -framerate 60 -probesize 32 -sync video  -
+}
+android_screenshot(){
+	adb exec-out screencap -p > $1
 }
 export PATH=$PATH:/home/phfn/.cargo/bin/
