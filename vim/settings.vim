@@ -125,3 +125,7 @@ if filereadable(expand('./.init.vim'))
 endif
 au BufEnter *.spl set filetype=spl
 au FileType spl set syntax=c
+
+" colorscheme
+set background=light
+colorscheme gruvbox
