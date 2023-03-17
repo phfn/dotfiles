@@ -16,8 +16,6 @@ local set_lsp_keybindings = function(client, bufnr)
 	buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
 	buf_set_keymap('n', 'K', '<cmd>Lspsaga hover_doc<CR>', opts)
 	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-	buf_set_keymap('n', '<S-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	buf_set_keymap('i', '<S-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 	buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
 	buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
 	buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -33,56 +31,41 @@ local set_lsp_keybindings = function(client, bufnr)
 	buf_set_keymap('n', '<space>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 	buf_set_keymap("n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
 	buf_set_keymap("n", "<ESC>", "<cmd>Lspsaga close_floaterm<cr>", opts)
+	buf_set_keymap("n", "<space>fu", "<cmd>Lspsaga lsp_finder<cr>", opts)
+
 end
+local set_lsp_keybindings2 = function(client) set_lsp_keybindings(client, 0)end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 
-require'lspconfig'.tsserver.setup{
-	capabilities = capabilities,
-	on_attach = set_lsp_keybindings
-}
-
-require'lspconfig'.rust_analyzer.setup{
-	capabilities = capabilities,
-	on_attach = set_lsp_keybindings
-}
-
- -- remember to 'pip install python-lsp-black'
-require'lspconfig'.pylsp.setup{ settings = { pylsp = { plugins = {
-	pycodestyle = { enabled = false },
-	pyflakes = { enabled = false },
-	pylint = {
-		enabled = true,
-		args = { "--max-line-length=88", }
+local server_settings = {
+	pylsp = {
+		settings = {
+			pylsp = {
+				plugins = {
+					pycodestyle = { enabled = false },
+					pyflakes = { enabled = false },
+					pylint = {
+						enabled = true,
+						args = { "--max-line-length=88", }
+					},
+				}
+			}
+		},
 	},
-}}}}
-
-require'lspconfig'.clangd.setup{
-	capabilities = capabilities,
-	on_attach = set_lsp_keybindings
 }
 
-require'lspconfig'.cmake.setup{
-	capabilities = capabilities,
-	on_attach = set_lsp_keybindings
-}
-
-require'lspconfig'.cssls.setup{
-	capabilities = capabilities,
-	on_attach = set_lsp_keybindings
-}
-
-require'lspconfig'.java_language_server.setup{
-	capabilities = capabilities,
-	on_attach = set_lsp_keybindings,
-	cmd={"java-language-server"}
-}
-
-require'lspconfig'.kotlin_language_server.setup{
-	capabilities = capabilities,
-	on_attach = set_lsp_keybindings,
-	cmd={"kotlin-language-server"}
+require 'mason-lspconfig'.setup_handlers {
+  function(server_name)
+    require('lspconfig')[server_name].setup {
+      capabilities = capabilities,
+      on_attach = set_lsp_keybindings2,
+      settings = server_settings[server_name],
+    }
+  end,
 }
 
 -- Setup nvim-cmp.
