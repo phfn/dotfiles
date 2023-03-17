@@ -1,3 +1,3 @@
 #/bin/bash
-pip install -r requirements/pip.txt
+#pip install -r /home/phfn/dotfiles/requirements/pip.txt
 
