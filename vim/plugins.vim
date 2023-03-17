@@ -306,6 +306,7 @@ return require('packer').startup(function()
 			map <leader>gf :diffget //2<CR>
 			map <leader>gj :diffget //3<CR>
 			au FileType fugitive set spell
+			au FileType fugitive set spelllang=en
 		]])
 	}
 	use {'airblade/vim-gitgutter'}
