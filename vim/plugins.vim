@@ -16,7 +16,7 @@ return require('packer').startup(function()
 -- lsp
 	use {'neovim/nvim-lspconfig',
 		config = function() 
-			vim.cmd([[source ~/dotfiles/vim/lsp.lua]])
+			require("phfn_nvim.lsp")
 			require("mason").setup()
 			require("fidget").setup()
 		end,
