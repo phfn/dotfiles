@@ -33,3 +33,5 @@ email = phfn@phfn.de
 	wt = worktree
 [pull]
 	ff = only
+[push]
+	autoSetupRemote = true
