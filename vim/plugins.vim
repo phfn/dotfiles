@@ -42,6 +42,17 @@ return require('packer').startup(function()
 	use {'hrsh7th/cmp-cmdline'}
 	use {'hrsh7th/cmp-nvim-lua'}
 
+	use {
+	  "someone-stole-my-name/yaml-companion.nvim",
+	  requires = {
+		  { "neovim/nvim-lspconfig" },
+		  { "nvim-lua/plenary.nvim" },
+		  { "nvim-telescope/telescope.nvim" },
+	  },
+	  config = function()
+		require("telescope").load_extension("yaml_schema")
+	  end,
+	}
 
 -- Enable Treesitter
 	use { 'nvim-treesitter/nvim-treesitter',
@@ -344,7 +355,15 @@ return require('packer').startup(function()
 
 --rust shit
 	use {'simrat39/rust-tools.nvim',
-		config = function() require('rust-tools').setup({}) end
+		config = function()
+			require('rust-tools').setup({
+				server = {
+						on_attach = function(client, bufnr)
+							require("phfn_nvim.lsp").set_lsp_keybindings(client, bufnr)
+						end
+					}
+			})
+		end
 	}
 
 
