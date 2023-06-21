@@ -107,7 +107,6 @@ cmp.setup({
 	sources = cmp.config.sources(
 		{ { name = 'nvim_lsp' }, },
 		{ { name = 'luasnip' }, },
-		{ { name = 'cmdline' }, },
 		{ { name = 'path' }, },
 		{ { name = 'buffer' }, }
 	),
@@ -121,7 +120,12 @@ cmp.setup({
 		ghost_text = true
 	}
 })
-
+cmp.setup.cmdline('/', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = {
+        { name = 'buffer' }
+      }
+    })
 vim.diagnostic.config({
 	underline = {severity = {min=vim.diagnostic.severity.WARN} },
 	virtual_text = {severity = {min=vim.diagnostic.severity.WARN} },
