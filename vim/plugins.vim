@@ -414,6 +414,12 @@ return require('packer').startup(function()
 		setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
 		ft = { "markdown" },
 	}
+	use {'neomake/neomake',
+		config = vim.cmd([[
+			nnoremap <F9> :w<cr> :Neomake!<cr>
+			nnoremap <F10> :w<cr> :Neomake<cr>
+		]])
+	}
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

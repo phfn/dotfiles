@@ -55,6 +55,7 @@ set termguicolors
 nnoremap <leader>so :w <bar> :source $MYVIMRC<CR>
 nnoremap <Tab> :tabnext<CR>
 nnoremap <leader><Tab> :tabnew<CR>
+nnoremap <silent> <leader>x :copen<CR>
 
 map <leader>q <C-W>q
 nnoremap <leader>Q :tabclose<CR>
