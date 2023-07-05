@@ -53,4 +53,16 @@ android_screen_mirror(){
 android_screenshot(){
 	adb exec-out screencap -p > $1
 }
+android_show_current_activity(){
+	adb shell "dumpsys activity activities | grep mResumedActivity"
+}
 export PATH=$PATH:/home/phfn/.cargo/bin/
+android_env(){
+	export ANDROID_HOME=/home/phfn/Android/Sdk
+	export ANDORID_SDK_ROOT=$ANDROID_HOME
+	export JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
+	PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin/:
+	PATH=$PATH:$ANDROID_HOME/emulator/
+	PATH=$PATH:$ANDROID_HOME/platform-tools/
+}
+
