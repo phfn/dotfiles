@@ -23,7 +23,7 @@ return require('packer').startup(function()
 		requires = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-			"j-hui/fidget.nvim",
+			{"j-hui/fidget.nvim", tag = "legacy"},
 			},
 	}
 	use {'hrsh7th/cmp-nvim-lsp'}
