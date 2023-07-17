@@ -42,6 +42,27 @@ return require('packer').startup(function()
 	use {'hrsh7th/cmp-cmdline'}
 	use {'hrsh7th/cmp-nvim-lua'}
 
+	use {'mfussenegger/nvim-dap',
+		config = function()
+			vim.keymap.set("n", "<leader>b", ":lua require'dap'.toggle_breakpoint()<CR>")
+			vim.keymap.set("n", "<leader>B", ':lua require"dap".toggle_breakpoint(vim.fn.input("Condition: "))<CR>')
+			vim.keymap.set("n", "<F5>", ":lua require'dap'.continue()<CR>")
+			vim.keymap.set("n", "<F10>", ":lua require'dap'.step_in()<CR>")
+			vim.keymap.set("n", "<F11>", ":lua require'dap'.step_over()<CR>")
+			vim.keymap.set("n", "<F12>", ":lua require'dap'.step_out()<CR>")
+
+		end
+	}
+	use {'rcarriga/nvim-dap-ui',
+		config = require('dapui').setup()
+	}
+	--[[ use {'theHamsta/nvim-dap-virtual-text', ]]
+	--[[ 	config = require('nvim-dap-virtual-text').setup() ]]
+	--[[ } ]]
+	use {'mfussenegger/nvim-dap-python',
+        config = require('dap-python').setup('~/venvs/debugpy/bin/python')
+    }
+
 	use {
 	  "someone-stole-my-name/yaml-companion.nvim",
 	  requires = {
