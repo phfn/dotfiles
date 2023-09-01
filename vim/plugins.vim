@@ -54,13 +54,13 @@ return require('packer').startup(function()
 		end
 	}
 	use {'rcarriga/nvim-dap-ui',
-		config = require('dapui').setup()
+		config = function() require('dapui').setup() end
 	}
 	--[[ use {'theHamsta/nvim-dap-virtual-text', ]]
 	--[[ 	config = require('nvim-dap-virtual-text').setup() ]]
 	--[[ } ]]
 	use {'mfussenegger/nvim-dap-python',
-        config = require('dap-python').setup('~/venvs/debugpy/bin/python')
+        config = function() require('dap-python').setup('~/venvs/debugpy/bin/python') end
     }
 
 	use {
