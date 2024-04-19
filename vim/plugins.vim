@@ -54,7 +54,11 @@ return require('packer').startup(function()
 		end
 	}
 	use {'rcarriga/nvim-dap-ui',
-		config = function() require('dapui').setup() end
+		config = function() require('dapui').setup() end,
+		requires = {
+			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio"
+		}
 	}
 	--[[ use {'theHamsta/nvim-dap-virtual-text', ]]
 	--[[ 	config = require('nvim-dap-virtual-text').setup() ]]
@@ -217,13 +221,6 @@ return require('packer').startup(function()
 					enable      = true,
 					update_cwd  = true,
 					ignore_list = {}
-					},
-				view = {
-					-- TODO edit mappings
-					mappings = {
-						custom_only = false,
-						list = {}
-						}
 					},
 				filters = {
 					dotfiles = true,
