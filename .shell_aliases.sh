@@ -65,4 +65,4 @@ android_env(){
 	PATH=$PATH:$ANDROID_HOME/emulator/
 	PATH=$PATH:$ANDROID_HOME/platform-tools/
 }
-
+alias trash=trash-put
