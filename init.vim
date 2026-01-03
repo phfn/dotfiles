@@ -1,2 +1,2 @@
+source ~/dotfiles/vim/plugins.lua
 source ~/dotfiles/vim/settings.vim
-source ~/dotfiles/vim/plugins.vim

@@ -13,9 +13,9 @@ endif
   " \| PlugInstall --sync | source $MYVIMRC
   " \| endif
 source ~/dotfiles/vim/settings.vim
-source ~/dotfiles/vim/plugins.vim
 " if empty(glob('~/.vim/autoload/plug.vim'))
   " silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 	" \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
+set background=dark " Dark colorscheme
