@@ -25,8 +25,29 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
   spec = {
     -- add your plugins here
-	{'https://github.com/mason-org/mason.nvim', opts=function() require('mason').setup({}) end},
-	{'https://github.com/neovim/nvim-lspconfig' },
+	-- {'https://github.com/mason-org/mason.nvim', opts=function() require('mason').setup({}) end},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {
+			ensure_installed = {'rust_analyzer', 'pylsp'},
+			automatic_enable = {
+				exclude = { }
+			}
+		},
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
+			"neovim/nvim-lspconfig",
+		},
+	},
+	{'nvimdev/lspsaga.nvim',
+		config = function()
+			require('lspsaga').setup({})
+		end,
+		dependencies = {
+			'nvim-treesitter/nvim-treesitter', -- optional
+			'nvim-tree/nvim-web-devicons',     -- optional
+		}
+	},
 	{'https://github.com/nvim-treesitter/nvim-treesitter',
 		opts = {
 			ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -46,68 +67,10 @@ require("lazy").setup({
 			}
 		}
 	},
-	{'https://github.com/hrsh7th/nvim-cmp',
-		dependencies = {
-			{'https://github.com/petertriho/cmp-git',
-				dependencies = {"https://github.com/nvim-lua/plenary.nvim"},
-				opts = {
-					filetypes = {"*"}
-				}
-			},
-			{'https://github.com/hrsh7th/cmp-path'},
-			{'https://github.com/hrsh7th/cmp-emoji'},
-		},
-		opts = function()
-			local cmp = require'cmp'
-
-			return {
-			snippet = {
-			  expand = function(args)
-				-- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-				vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
-			  end,
-			},
-			mapping = cmp.mapping.preset.insert({
-			  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-			  ['<C-f>'] = cmp.mapping.scroll_docs(4),
-			  ['<C-Space>'] = cmp.mapping.complete(),
-			  ['<C-e>'] = cmp.mapping.abort(),
-			  ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-			}),
-			sources = cmp.config.sources(
-				{
-					{ name = 'git' },
-					{ name = 'emoji' },
-					{ name = 'nvim_lsp' },
-					{ name = 'path' },
-					{ name = 'cmdline' },
-					{ name = 'commit' },
-
-				},
-				{
-					{ name = 'buffer' },
-				}
-			),
-			}
-			
-
-		end,
-	},
-	{'https://github.com/hrsh7th/cmp-nvim-lsp',
-		dependencies = {"nvim-cmp"},
-		opts = function() 
-			local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-			vim.lsp.config('pylsp', {
-				capabilities = capabilities
-			})
-			vim.lsp.enable('pylsp')
-		end
-	},
 	{'https://github.com/ellisonleao/gruvbox.nvim',
 		opts = function()
 			vim.cmd([[
-				set background=light
+				" set background=light
 				colorscheme gruvbox
 			]])
 		end,
@@ -193,4 +156,5 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
--- Set up lspconfig.
+-- Set up lspconfig
+require'phfn_nvim.lsp'
